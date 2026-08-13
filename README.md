@@ -1,6 +1,11 @@
 # Redrafting America — Website
 
+**Version:** 001.20260813.040105
+**Site version:** v0.7 BETA
+
 `www.redraftingamerica.org` — the canonical public-facing site for a nonprofit civic initiative designing **Constitution v2.0**, a modern constitutional framework built around truth, accountability, and human dignity.
+
+> **Domain discrepancy — unresolved.** This README names `www.redraftingamerica.org` as canonical, while the GitHub organization profile lists `https://redrafting.us`. Both are public and they disagree. Settle which is authoritative and correct the other.
 
 ## TL;DR
 
@@ -293,6 +298,30 @@ Not everything in the original plan was over-scoped. **Plausible/PostHog-style p
 ---
 
 ## 5. Version History
+
+### Two version systems, deliberately
+
+This repository carries two version numbers that mean different things. Confusing them
+will desynchronize the README from the live site.
+
+| | Format | What it versions | Where it appears |
+|---|---|---|---|
+| **Site version** | `v0.7 BETA` | The deployed website as a product | Version pills on every public page, and the entries below |
+| **Document version** | `001.20260813.040105` | This README as a managed document | The stamp at the top of this file |
+
+**The `v0.x` entries below are not renamed to the `NNN.YYYYMMDD.HHMMSS` form, and should
+not be.** Those numbers are rendered on the live site in the shared-shell version pills. A
+reader who sees `v0.7 BETA` in the footer and then opens this repository has to find
+`v0.7` here. Renumbering the history would break that correspondence for no gain.
+
+The project-wide `NNN.YYYYMMDD.HHMMSS` convention applies to **managed documents** — files
+carrying a canonical identity and a lifecycle code. A website is a deployment target with
+its own naming standard, which is exactly why the folder-tree design keeps `web/` outside
+`managed/`.
+
+**Rule:** when the site version advances, update the version pills and add an entry below
+using the same `v0.x` number. When this README is substantively revised, bump the document
+version at the top. The two move independently.
 
 ### v0.7 — Redrafting America organization and infrastructure migration
 
