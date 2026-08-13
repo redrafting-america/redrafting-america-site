@@ -19,7 +19,7 @@
     {
       key: 'constitution',
       label: 'Constitution v2.0',
-      href: 'pages/constitution/index.html',
+      href: 'pages/constitution2/index.html',
       items: [
         { label: 'Declaration Of Reformation', future: true },
         { label: 'Preamble', future: true },
@@ -91,7 +91,7 @@
 
     if (path.indexOf('/pages/about/') !== -1 || /\/mission\.html$/.test(path)) {
       key = 'about'; category = 'About';
-    } else if (path.indexOf('/pages/constitution/') !== -1) {
+    } else if (path.indexOf('/pages/constitution2/') !== -1) {
       key = 'constitution'; category = 'Constitution v2.0';
     } else if (path.indexOf('/pages/community/') !== -1 || path.indexOf('/the-drafting-room.html') !== -1 || path.indexOf('/drafting-room/') !== -1) {
       key = 'community'; category = 'Community';

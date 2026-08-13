@@ -73,7 +73,7 @@ pages/
 │   ├── governance.html
 │   ├── transparency.html
 │   └── project-roadmap.html
-├── constitution/
+├── constitution2/
 │   ├── index.html
 │   ├── declaration.html
 │   ├── preamble.html
@@ -143,7 +143,7 @@ The corresponding current page organization is:
 ```text
 pages/
 ├── about/
-├── constitution/
+├── constitution2/
 ├── learn/
 ├── community/
 │   ├── index.html
@@ -215,7 +215,7 @@ website/
 Future constitutional material follows the same hierarchy:
 
 ```
-pages/constitution/
+pages/constitution2/
 ├── index.html
 ├── articles/
 │   ├── article-01.html
@@ -485,7 +485,7 @@ The defining event of v1.0: **publishing all 15 Articles of Constitution v2.0, o
 
 - **Migrate to a static site generator (Astro).** Four hand-copied HTML files was manageable; fifteen-plus paired Article/Explainer documents plus an ongoing blog is not, without a shared template. Astro ships zero JavaScript by default, keeping the current site's performance profile while solving the duplication problem.
 - **Constitution index page** — a single table of contents showing all 15 Articles, published and upcoming, each cross-linked to its Explainer.
-- **Permanent URL structure**, decided in advance: `/constitution/article-i` through `/constitution/article-xv`, `/explainers/article-i` and so on — stable from day one, since these will eventually anchor Digital Constitutional Convention discussion threads.
+- **Permanent URL structure**, decided in advance: `/constitution2/article-i` through `/constitution2/article-xv`, `/explainers/article-i` and so on — stable from day one, since these will eventually anchor Digital Constitutional Convention discussion threads.
 - **Blog**, with its own template and an auto-generated RSS feed, doubling as the announcement channel for each week's Article release.
 - **Migrate the four existing pages** (Home, Mission, Careers, Cultural Influences) into the same Astro structure, rather than leaving them as legacy files outside the new system.
 - **Donation infrastructure**, once the IRS determination letter exists (which unlocks nonprofit-rate pricing across every payment platform under consideration) — cards, PayPal, and Apple Pay bundled under **Givebutter**, selected over Zeffy and Donorbox on cost-and-features grounds (comparable $0-by-default cost to Zeffy, but with the ability to disable donor tip-prompting entirely, plus a stronger built-in feature set). Zelle was evaluated separately and ruled out (no receipting, inconsistent bank support, no real cost advantage worth the gap).
