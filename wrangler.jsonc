@@ -1,0 +1,25 @@
+{
+  "$schema": "https://raw.githubusercontent.com/cloudflare/workers-sdk/main/packages/wrangler/config-schema.json",
+  "name": "redrafting-america-site",
+  "main": "./src/index.js",
+  "compatibility_date": "2026-08-31",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash",
+    "run_worker_first": true
+  },
+  "routes": [
+    { "pattern": "www.redraftingamerica.org", "custom_domain": true },
+    { "pattern": "redraftingamerica.org", "custom_domain": true },
+    { "pattern": "www.redraftingamerica.us", "custom_domain": true },
+    { "pattern": "redraftingamerica.us", "custom_domain": true },
+    { "pattern": "www.redrafting.us", "custom_domain": true },
+    { "pattern": "redrafting.us", "custom_domain": true }
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
+}

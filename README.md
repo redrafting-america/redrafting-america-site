@@ -5,6 +5,26 @@
 
 `www.redraftingamerica.org` — the canonical public-facing site for a nonprofit civic initiative designing **Constitution v2.0**, a modern constitutional framework built around truth, accountability, and human dignity.
 
+## Cloudflare publication
+
+The production site is packaged as static assets for Cloudflare Workers. Run
+`./scripts/build-cloudflare-site.sh` to create the controlled `dist/` output,
+then validate the Cloudflare upload with `npx wrangler deploy --dry-run`.
+
+Only the active public site is copied into `dist/`: the root public files,
+`assets/`, and `pages/`. Historical `archive/`, working `site-work/`, reusable
+`templates/`, repository documentation, and Git metadata are deliberately not
+published. The build also creates the stable legacy paths formerly supplied by
+Vercel rewrites. Keep `vercel.json` only as a migration reference until the
+Cloudflare preview and production domains have been verified; it is not used by
+the Cloudflare deployment.
+
+The Worker serves the active static assets only on
+`www.redraftingamerica.org`. Requests for `redraftingamerica.org`,
+`redraftingamerica.us`, `www.redraftingamerica.us`, `redrafting.us`, and
+`www.redrafting.us` receive a permanent redirect to the same path and query on
+the canonical `https://www.redraftingamerica.org` origin.
+
 > **Domain discrepancy — unresolved.** This README names `www.redraftingamerica.org` as canonical, while the GitHub organization profile lists `https://redrafting.us`. Both are public and they disagree. Settle which is authoritative and correct the other.
 
 ## TL;DR
