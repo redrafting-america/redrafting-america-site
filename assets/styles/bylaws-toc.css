@@ -1,0 +1,80 @@
+.bylaws-jumps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 1.5rem 0 0;
+}
+
+.bylaws-jumps a {
+  min-width: 2.4rem;
+  padding: 0.4rem 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 0.25rem;
+  color: var(--navy);
+  background: var(--paper-light);
+  font: 700 0.75rem/1 "IBM Plex Mono", ui-monospace, monospace;
+  text-align: center;
+  text-decoration: none;
+}
+
+.bylaws-jumps a:hover,
+.bylaws-jumps a:focus-visible {
+  border-color: var(--gold);
+  color: #7b571c;
+}
+
+.bylaws-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.bylaws-entry {
+  scroll-margin-top: calc(var(--shell-header-height, 84px) + 1rem);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--gold);
+  background: var(--paper-light);
+}
+
+.bylaws-entry header {
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.bylaws-entry .article-number {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: #87601e;
+  font: 700 0.72rem/1.3 "IBM Plex Mono", ui-monospace, monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.bylaws-entry h2 {
+  margin: 0;
+  font-size: clamp(1.35rem, 2.5vw, 1.8rem);
+}
+
+.bylaws-entry .introduction {
+  max-width: 78ch;
+  margin: 1rem 0 0;
+  color: #2f3d48;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 1.04rem;
+  font-style: italic;
+  line-height: 1.75;
+}
+
+.back-to-top {
+  display: inline-block;
+  margin-top: 1rem;
+  font: 700 0.7rem/1.3 "IBM Plex Mono", ui-monospace, monospace;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+@media (max-width: 640px) {
+  .bylaws-jumps a { flex: 1 0 2.5rem; }
+  .bylaws-entry .introduction { font-size: 1rem; }
+}
