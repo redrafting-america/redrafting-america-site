@@ -317,6 +317,19 @@
     box-shadow: 0 20px 50px rgba(23,35,63,0.12);
   }
   .preview-card img { display: block; }
+  .lexicon-open {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: zoom-in;
+  }
+  .lexicon-open:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
   .preview-caption {
     display: flex; justify-content: space-between; align-items: center;
     gap: 1rem; flex-wrap: wrap;
@@ -328,6 +341,66 @@
   }
   .preview-caption a { color: var(--gold); text-decoration: none; }
   .preview-caption a:hover { text-decoration: underline; }
+  .preview-caption button {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--gold);
+    font: inherit;
+    cursor: zoom-in;
+  }
+  .preview-caption button:hover,
+  .preview-caption button:focus-visible { text-decoration: underline; }
+
+  .seal-dialog {
+    width: min(96vw, 1100px);
+    max-width: none;
+    max-height: 96vh;
+    margin: auto;
+    padding: 3rem 1rem 1rem;
+    border: 1px solid var(--panel-line);
+    border-radius: 10px;
+    background: var(--void);
+    color: var(--parchment);
+    box-shadow: 0 25px 80px rgba(0,0,0,0.45);
+  }
+  .seal-dialog::backdrop { background: rgba(8,13,25,0.88); }
+  .seal-dialog img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: calc(96vh - 6.5rem);
+    margin: 0 auto;
+    object-fit: contain;
+  }
+  .seal-dialog-close {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.75rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--panel-line);
+    border-radius: 999px;
+    background: var(--panel);
+    color: var(--parchment);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .seal-dialog-close:hover,
+  .seal-dialog-close:focus-visible { color: var(--gold); border-color: var(--gold); }
+  .seal-dialog-original {
+    display: block;
+    width: fit-content;
+    margin: 0.7rem auto 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.67rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--parchment-dim);
+  }
+  .seal-dialog-original:hover,
+  .seal-dialog-original:focus-visible { color: var(--gold); }
 
   /* ---------- pillars strip ---------- */
   .pillars {
@@ -577,12 +650,12 @@
     <div class="wrap">
       <div class="split reverse lexicon-feature">
         <div class="preview-card">
-          <a href="assets/images/constitution-v2-lexicon-portrait.png?v=20260805-2" target="_blank" rel="noopener">
-            <img src="assets/images/constitution-v2-lexicon-portrait.png?v=20260805-2" alt="Portrait edition of the Redrafting America Constitution v2.0 Official Constitutional Lexicon, listing ten constitutional institutions with their functions and principles" loading="lazy" />
-          </a>
+          <button class="lexicon-open" id="lexicon-open" type="button" aria-haspopup="dialog" aria-controls="lexicon-dialog" aria-label="Enlarge the Constitutional Lexicon">
+            <img src="assets/images/constitution-v2-lexicon-portrait.png?v=20260831-1" alt="Portrait edition of the Redrafting America Constitution v2.0 Official Constitutional Lexicon, listing ten constitutional institutions with their functions and principles" loading="lazy" />
+          </button>
           <div class="preview-caption">
             <span>Constitution v2.0 Reference Standard &middot; Rev. 6</span>
-            <a href="assets/images/constitution-v2-lexicon-portrait.png?v=20260805-2" target="_blank" rel="noopener">View full size &rarr;</a>
+            <button id="lexicon-caption-open" type="button" aria-haspopup="dialog" aria-controls="lexicon-dialog">View full size &rarr;</button>
           </div>
         </div>
         <div>
@@ -597,6 +670,12 @@
       </div>
     </div>
   </section>
+
+  <dialog class="seal-dialog" id="lexicon-dialog" aria-label="Constitutional Lexicon full-size viewer">
+    <button class="seal-dialog-close" id="lexicon-dialog-close" type="button" aria-label="Close full-size Constitutional Lexicon">&times;</button>
+    <img src="assets/images/constitution-v2-lexicon-portrait.png?v=20260831-1" width="1024" height="1536" alt="Full-size portrait edition of the Redrafting America Constitution v2.0 Official Constitutional Lexicon" />
+    <a class="seal-dialog-original" href="assets/images/constitution-v2-lexicon-portrait.png?v=20260831-1" target="_blank" rel="noopener">Open original 1024-by-1536 image</a>
+  </dialog>
 
   <!-- ================= CITIZEN PORTAL ================= -->
   <section>
@@ -738,6 +817,24 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      var imageButton = document.getElementById('lexicon-open');
+      var captionButton = document.getElementById('lexicon-caption-open');
+      var closeButton = document.getElementById('lexicon-dialog-close');
+      var dialog = document.getElementById('lexicon-dialog');
+      if (!imageButton || !captionButton || !closeButton || !dialog || !dialog.showModal) return;
+
+      function openDialog() { dialog.showModal(); }
+      imageButton.addEventListener('click', openDialog);
+      captionButton.addEventListener('click', openDialog);
+      closeButton.addEventListener('click', function () { dialog.close(); });
+      dialog.addEventListener('click', function (event) {
+        if (event.target === dialog) dialog.close();
+      });
+    })();
+  </script>
 
   <script>
     (function () {
