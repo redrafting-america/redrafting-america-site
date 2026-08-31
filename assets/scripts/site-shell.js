@@ -12,7 +12,7 @@
       items: [
         { label: 'Origins', future: true },
         { label: 'Mission Statement', href: 'pages/about/mission.html' },
-        { label: 'Bylaws', future: true },
+        { label: 'Bylaws', href: 'pages/about/bylaws.html' },
         { label: 'Leadership', href: 'pages/about/leadership.html' },
       ]
     },

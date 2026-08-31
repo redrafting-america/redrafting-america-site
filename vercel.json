@@ -6,6 +6,10 @@
       "destination": "/pages/about/mission.html"
     },
     {
+      "source": "/bylaws.html",
+      "destination": "/pages/about/bylaws.html"
+    },
+    {
       "source": "/careers.html",
       "destination": "/pages/get-involved/careers.html"
     },

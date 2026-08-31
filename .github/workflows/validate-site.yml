@@ -1,0 +1,56 @@
+name: Validate static site
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check changed files for whitespace errors
+        run: git diff --check "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}"
+
+      - name: Check required public files
+        run: |
+          test -f index.html
+          test -f 404.html
+          test -f robots.txt
+          test -f sitemap.xml
+
+      - name: Parse active HTML files
+        run: |
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+
+          class SiteParser(HTMLParser):
+              pass
+
+          checked = 0
+          for path in Path('.').rglob('*.html'):
+              if path.parts[0] in {'archive', 'site-work', 'templates'}:
+                  continue
+              parser = SiteParser()
+              parser.feed(path.read_text(encoding='utf-8'))
+              parser.close()
+              checked += 1
+
+          if checked == 0:
+              raise SystemExit('No active HTML files were found.')
+          print(f'Parsed {checked} active HTML files.')
+          PY
+
+      - name: Reject unresolved merge markers
+        run: |
+          if git grep -n -E '^(<<<<<<<|=======|>>>>>>>)' -- '*.html' '*.css' '*.js'; then
+            echo 'Unresolved merge markers found.' >&2
+            exit 1
+          fi

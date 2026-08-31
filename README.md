@@ -25,7 +25,9 @@ This site is deliberately simple: static HTML, no framework, no database, no bui
 
 ## Readability and Canonical-Domain Update (August 5, 2026)
 
-- Restored the website seal as the stable derivative `assets/images/seal.png` while retaining later `RDA-GRA-0004` seal concepts in the library as design history.
+- Promoted the professional RC25 Republic-default National Seal web master to the stable website derivative `assets/images/seal.png`. The outgoing website seal is retained in `archive/assets/images/seal-pre-rc25-2026-08-31.png` as a rollback copy; the authoritative professional package remains in the governed graphics library.
+- Removed the Mission hero's legacy circular image mask so the RC25 Seal's exterior digital circuitry remains visible, and replaced its rectangular box shadow with a transparency-aware drop shadow.
+- Added a public Table of Contents for the pending Bylaws with all twenty-four article introductions reproduced verbatim from the current Draft 18 review set, activated the shared About navigation link, and established `/bylaws.html` as its stable public address.
 - Added the stable derivative `assets/images/constitution-v2-lexicon.png` from the `RDA-GRA-0019` archival family, giving the Constitutional Institutions rows and reference footer more breathing room, and enlarged the Lexicon's homepage presentation.
 - Rebalanced the “Bots on the Street” response cards around their actual content width so quotations remain readable beside the desktop navigation panels and on mobile screens.
 - Removed inherited sticky-footer behavior that could obscure long pages, then audited all 47 active pages at desktop and mobile widths.
