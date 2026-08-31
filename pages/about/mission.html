@@ -154,11 +154,90 @@
     text-align: center;
     border-bottom: 1px solid var(--panel-line);
   }
-  .doc-hero img.crest {
-    width: min(400px, 75%); height: auto;
-    margin: 0 auto 2rem;
+  .seal-open {
+    display: block;
+    width: min(400px, 75%);
+    margin: 0 auto 0.75rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--parchment-dim);
+    cursor: zoom-in;
+  }
+  .seal-open img.crest {
+    width: 100%; height: auto;
+    margin: 0;
     filter: drop-shadow(0 20px 25px rgba(23,35,63,0.18));
   }
+  .seal-open:hover img.crest,
+  .seal-open:focus-visible img.crest {
+    filter: drop-shadow(0 20px 25px rgba(23,35,63,0.26));
+  }
+  .seal-open:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 6px;
+    border-radius: 4px;
+  }
+  .seal-enlarge-label {
+    display: inline-block;
+    margin-bottom: 1.25rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.67rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--parchment-dim);
+  }
+  .seal-open:hover + .seal-enlarge-label,
+  .seal-open:focus-visible + .seal-enlarge-label { color: var(--gold); }
+
+  .seal-dialog {
+    width: min(96vw, 2080px);
+    max-width: none;
+    max-height: 96vh;
+    margin: auto;
+    padding: 3rem 1rem 1rem;
+    border: 1px solid var(--panel-line);
+    border-radius: 10px;
+    background: var(--void);
+    color: var(--parchment);
+    box-shadow: 0 25px 80px rgba(0,0,0,0.45);
+  }
+  .seal-dialog::backdrop { background: rgba(8,13,25,0.88); }
+  .seal-dialog img {
+    width: min(100%, 2000px);
+    height: auto;
+    max-height: calc(96vh - 6.5rem);
+    margin: 0 auto;
+    object-fit: contain;
+  }
+  .seal-dialog-close {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.75rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--panel-line);
+    border-radius: 999px;
+    background: var(--panel);
+    color: var(--parchment);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .seal-dialog-close:hover,
+  .seal-dialog-close:focus-visible { color: var(--gold); border-color: var(--gold); }
+  .seal-dialog-original {
+    display: block;
+    width: fit-content;
+    margin: 0.7rem auto 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.67rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--parchment-dim);
+  }
+  .seal-dialog-original:hover,
+  .seal-dialog-original:focus-visible { color: var(--gold); }
   .doc-hero .latin {
     font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
     color: var(--gold); font-size: 1.05rem; margin: 0 auto 0.6rem;
@@ -354,7 +433,10 @@
   </div>
 
   <div class="doc-hero">
-    <img class="crest" src="assets/images/seal.png" alt="Veritas Super Omnia national seal for the United Republic of America" />
+    <button class="seal-open" id="seal-open" type="button" aria-haspopup="dialog" aria-controls="seal-dialog" aria-label="Enlarge the National Seal">
+      <img class="crest" src="assets/images/seal.png" width="2000" height="2000" alt="Veritas Super Omnia national seal for the United Republic of America" />
+    </button>
+    <span class="seal-enlarge-label" aria-hidden="true">Select to view full size</span>
     <p class="latin">Ex Uno Floremus &mdash; From One, We Flourish</p>
     <h1>Our Mission</h1>
     <p>
@@ -366,6 +448,12 @@
       Back to home
     </a>
   </div>
+
+  <dialog class="seal-dialog" id="seal-dialog" aria-label="National Seal full-size viewer">
+    <button class="seal-dialog-close" id="seal-dialog-close" type="button" aria-label="Close full-size National Seal">&times;</button>
+    <img src="assets/images/seal.png" width="2000" height="2000" alt="Full-size Veritas Super Omnia national seal for the United Republic of America" />
+    <a class="seal-dialog-original" href="assets/images/seal.png" target="_blank" rel="noopener">Open original 2000-pixel image</a>
+  </dialog>
 
   <div class="article-wrap">
     <nav class="toc" aria-label="Table of contents">
@@ -627,6 +715,25 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      var openButton = document.getElementById('seal-open');
+      var closeButton = document.getElementById('seal-dialog-close');
+      var dialog = document.getElementById('seal-dialog');
+      if (!openButton || !closeButton || !dialog || !dialog.showModal) return;
+
+      openButton.addEventListener('click', function () {
+        dialog.showModal();
+      });
+      closeButton.addEventListener('click', function () {
+        dialog.close();
+      });
+      dialog.addEventListener('click', function (event) {
+        if (event.target === dialog) dialog.close();
+      });
+    })();
+  </script>
 
   <script>
     (function () {
