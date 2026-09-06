@@ -59,14 +59,17 @@ for route in "${legacy_file_routes[@]}"; do
 done
 
 mkdir -p -- \
-    "${OUTPUT_DIRECTORY}/drafting-room/field-notes"
+    "${OUTPUT_DIRECTORY}/drafting-room/papers" \
+    "${OUTPUT_DIRECTORY}/drafting-room/drafting-notes"
 
 cp -p -- "${PROJECT_ROOT}/pages/community/drafting-room/index.html" \
     "${OUTPUT_DIRECTORY}/the-drafting-room.html"
-cp -p -- "${PROJECT_ROOT}/pages/community/drafting-room/papers/paper-no-1.html" \
-    "${OUTPUT_DIRECTORY}/drafting-room/paper-no-1.html"
-cp -p -- "${PROJECT_ROOT}/pages/community/drafting-room/field-notes/bots-on-the-street.html" \
-    "${OUTPUT_DIRECTORY}/drafting-room/field-notes/bots-on-the-street.html"
+for paper in "${PROJECT_ROOT}"/pages/community/drafting-room/papers/*.html; do
+    cp -p -- "$paper" "${OUTPUT_DIRECTORY}/drafting-room/papers/$(basename -- "$paper")"
+done
+for drafting_note in "${PROJECT_ROOT}"/pages/community/drafting-room/drafting-notes/*.html; do
+    cp -p -- "$drafting_note" "${OUTPUT_DIRECTORY}/drafting-room/drafting-notes/$(basename -- "$drafting_note")"
+done
 
 # Retain the old short asset paths without publishing non-public directories.
 cp -R -- "${PROJECT_ROOT}/assets/images" "${OUTPUT_DIRECTORY}/images"

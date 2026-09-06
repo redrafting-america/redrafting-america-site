@@ -114,20 +114,18 @@
     var section = null;
     var sectionHref = null;
 
-    var paperNumber = main.querySelector('.paper-number');
-    var isDraftingRoomPaper = path.indexOf('/pages/community/drafting-room/papers/') !== -1 || /\/drafting-room\/paper-[^/]+\.html$/.test(path);
-    if (paperNumber && isDraftingRoomPaper) {
+    var paperLabel = main.querySelector('.paper-number');
+    var isDraftingRoomPaper = path.indexOf('/pages/community/drafting-room/papers/') !== -1 || path.indexOf('/drafting-room/papers/') !== -1;
+    if (paperLabel && isDraftingRoomPaper) {
       section = 'The Drafting Room';
       sectionHref = 'pages/community/drafting-room/index.html';
-      page = paperNumber.textContent.trim();
     }
 
     var fieldNoteNumber = main.querySelector('.field-note-number');
-    var isDraftingRoomFieldNote = path.indexOf('/pages/community/drafting-room/field-notes/') !== -1 || path.indexOf('/drafting-room/field-notes/') !== -1;
+    var isDraftingRoomFieldNote = path.indexOf('/pages/community/drafting-room/drafting-notes/') !== -1 || path.indexOf('/drafting-room/drafting-notes/') !== -1;
     if (fieldNoteNumber && isDraftingRoomFieldNote) {
       section = 'The Drafting Room';
       sectionHref = 'pages/community/drafting-room/index.html';
-      page = fieldNoteNumber.textContent.trim();
     }
 
     return { key: key, category: category, page: page, section: section, sectionHref: sectionHref };

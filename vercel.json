@@ -26,12 +26,12 @@
       "destination": "/pages/community/drafting-room/index.html"
     },
     {
-      "source": "/drafting-room/paper-no-1.html",
-      "destination": "/pages/community/drafting-room/papers/paper-no-1.html"
+      "source": "/drafting-room/papers/:slug.html",
+      "destination": "/pages/community/drafting-room/papers/:slug.html"
     },
     {
-      "source": "/drafting-room/field-notes/bots-on-the-street.html",
-      "destination": "/pages/community/drafting-room/field-notes/bots-on-the-street.html"
+      "source": "/drafting-room/drafting-notes/:slug.html",
+      "destination": "/pages/community/drafting-room/drafting-notes/:slug.html"
     },
     {
       "source": "/images/:path*",

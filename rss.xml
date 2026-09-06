@@ -3,7 +3,7 @@
   <channel>
     <title>The Drafting Room</title>
     <link>https://www.redraftingamerica.org/the-drafting-room.html</link>
-    <description>Papers and field notes from Redrafting America on constitutional design, institutional resilience, and the work of building Constitution v2.0.</description>
+    <description>Papers and Drafting Notes from Redrafting America on constitutional design, institutional resilience, and the work of building Constitution v2.0.</description>
     <language>en-us</language>
     <copyright>Copyright 2026 Redrafting America</copyright>
     <lastBuildDate>Wed, 05 Aug 2026 00:00:00 -0400</lastBuildDate>
@@ -14,20 +14,44 @@
       <link>https://www.redraftingamerica.org/the-drafting-room.html</link>
     </image>
     <item>
-      <title>Field Note No. 1: Bots on the Street</title>
-      <link>https://www.redraftingamerica.org/drafting-room/field-notes/bots-on-the-street.html</link>
-      <guid isPermaLink="true">https://www.redraftingamerica.org/drafting-room/field-notes/bots-on-the-street.html</guid>
+      <title>Drafting Note: Bots on the Street</title>
+      <link>https://www.redraftingamerica.org/drafting-room/drafting-notes/bots-on-the-street.html</link>
+      <guid isPermaLink="true">https://www.redraftingamerica.org/drafting-room/drafting-notes/bots-on-the-street.html</guid>
       <pubDate>Wed, 05 Aug 2026 00:00:00 -0400</pubDate>
       <author>info@redraftingamerica.org (Redrafting America)</author>
       <description><![CDATA[We asked ten artificial intelligences one human question: What does “Redrafting America” mean to you?]]></description>
     </item>
     <item>
-      <title>Paper No. 1: Founder’s Introduction</title>
-      <link>https://www.redraftingamerica.org/drafting-room/paper-no-1.html</link>
-      <guid isPermaLink="true">https://www.redraftingamerica.org/drafting-room/paper-no-1.html</guid>
+      <title>Paper: Founder’s Introduction</title>
+      <link>https://www.redraftingamerica.org/drafting-room/papers/founders-introduction.html</link>
+      <guid isPermaLink="true">https://www.redraftingamerica.org/drafting-room/papers/founders-introduction.html</guid>
       <pubDate>Sat, 01 Aug 2026 00:00:00 -0400</pubDate>
       <author>info@redraftingamerica.org (Todd McGuckin)</author>
       <description><![CDATA[Why Redrafting America began, why resilient institutions matter more than perfect leaders, and why Constitution v2.0 is an invitation rather than a final word.]]></description>
+    </item>
+    <item>
+      <title>Paper: America at 250: Honoring the Past. Designing the Future.</title>
+      <link>https://www.redraftingamerica.org/drafting-room/papers/america-at-250.html</link>
+      <guid isPermaLink="true">https://www.redraftingamerica.org/drafting-room/papers/america-at-250.html</guid>
+      <pubDate>Sat, 04 Jul 2026 00:00:00 -0400</pubDate>
+      <author>info@redraftingamerica.org (Todd McGuckin)</author>
+      <description><![CDATA[A manifesto for honoring America’s founding spirit by designing stronger institutions for the nation’s next 250 years.]]></description>
+    </item>
+    <item>
+      <title>Paper: Godwin’s Law</title>
+      <link>https://www.redraftingamerica.org/drafting-room/papers/godwins-law.html</link>
+      <guid isPermaLink="true">https://www.redraftingamerica.org/drafting-room/papers/godwins-law.html</guid>
+      <pubDate>Sat, 22 Mar 2025 00:00:00 -0400</pubDate>
+      <author>info@redraftingamerica.org (Todd McGuckin)</author>
+      <description><![CDATA[A historical warning about authoritarian patterns and the responsibility to act before democratic institutions fail.]]></description>
+    </item>
+    <item>
+      <title>Paper: A Call to the People: Defend Our Republic on Independence Day</title>
+      <link>https://www.redraftingamerica.org/drafting-room/papers/a-call-to-the-people.html</link>
+      <guid isPermaLink="true">https://www.redraftingamerica.org/drafting-room/papers/a-call-to-the-people.html</guid>
+      <pubDate>Mon, 17 Mar 2025 00:00:00 -0400</pubDate>
+      <author>info@redraftingamerica.org (Todd McGuckin)</author>
+      <description><![CDATA[A peaceful call to defend the Republic, restore democratic accountability, and strengthen the Constitution.]]></description>
     </item>
   </channel>
 </rss>

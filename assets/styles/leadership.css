@@ -54,6 +54,20 @@
   letter-spacing: 0.06em;
 }
 
+.leader-website {
+  justify-self: start;
+  color: var(--navy);
+  font-size: 0.94rem;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+.leader-website:hover,
+.leader-website:focus-visible {
+  color: #2563EB;
+  text-decoration: underline;
+}
+
 .leader-bio {
   margin: 0;
   color: #44505e;

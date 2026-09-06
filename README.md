@@ -186,6 +186,10 @@ pages/
 
 `policies/` and `utility/` remain support sections rather than seventh and eighth main categories. The Drafting Room now belongs to Community as the project blog, while Cultural Influences belongs to Newsroom. Stable public addresses are preserved through Vercel rewrites even though the physical files have moved.
 
+The Drafting Room separates publications by editorial purpose. **Papers** present developed constitutional arguments, institutional proposals, manifestos, and civic positions; readers should expect a sustained case or defined position supported by the author’s reasoning. **Drafting Notes** document constitutional inquiry in progress through interviews, experiments, observations, working ideas, and open questions; readers should expect exploration rather than an adopted or settled position.
+
+Publications use stable, descriptive title slugs rather than sequence numbers. Original publication dates determine display order but never change an article’s identity or address. Every publication carries a category, summary, reading-time label, and a small set of reader-facing topic tags. The Drafting Room search matches titles, summaries, categories, and tags; category controls and the topic selector narrow both publication lists without creating separate archive pages. During the beta, numbered and `field-notes` addresses are replaced rather than retained; public links use `/drafting-room/papers/<slug>.html` or `/drafting-room/drafting-notes/<slug>.html`. A renamed organization is presented under its current name in republished work while the original publication date is preserved.
+
 The earlier incremental structure notes remain below as part of the README's retained history.
 
 The repository separates public content pages from shared assets and operational files. The filesystem is organized by subject area rather than by navigation order: navigation can change as the site evolves, while stable content categories remain understandable and scalable.
@@ -203,8 +207,11 @@ website/
 │   └── drafting-room/
 │       ├── index.html
 │       ├── papers/                       # Sustained essays and developed arguments
-│       │   └── paper-no-1.html
-│       └── field-notes/                  # Interviews, experiments, observations, and open questions
+│       │   ├── a-call-to-the-people.html
+│       │   ├── america-at-250.html
+│       │   ├── founders-introduction.html
+│       │   └── godwins-law.html
+│       └── drafting-notes/               # Interviews, experiments, observations, and open questions
 │           └── bots-on-the-street.html
 ├── assets/                                 # Shared resources, never page content
 │   ├── audio/
@@ -251,7 +258,7 @@ pages/constitution2/
     └── ...
 ```
 
-Public URLs are intentionally independent of physical storage. Vercel rewrites keep established addresses such as `/mission.html` and `/drafting-room/paper-no-1.html` working even though their source files are grouped under `pages/`. This prevents broken bookmarks, RSS entries, and search results while allowing the repository to scale.
+Public URLs are intentionally independent of physical storage. Vercel rewrites keep established top-level addresses such as `/mission.html` working even though their source files are grouped under `pages/`. Drafting Room publications use category-and-slug routes that map directly to the matching source category and filename. This preserves understandable public addresses while allowing the repository to scale.
 
 The original v0.3 structure section is retained below for historical reference.
 
