@@ -546,6 +546,18 @@ Everything requiring real accounts, sessions, and live user interaction is scope
 4. Deploy. Attach both `www.redraftingamerica.org` and `redraftingamerica.org` under project Settings, with `www` serving production and the apex redirecting permanently to `www`.
 5. When the active public URL set changes, update `sitemap.xml`, deploy it, and submit `https://www.redraftingamerica.org/sitemap.xml` through Google Search Console and Bing Webmaster Tools.
 
+### Cultural Influences additions — September 8, 2026
+
+The approved collection update adds clips 22 and 23: Dr. Randall Mindy’s televised monologue from *Don’t Look Up* and Elliot Alderson’s society monologue from *Mr. Robot*. Preserve the approved Summary and Why It Matters text and the supplied quotations and YouTube links. Decode the pasted `&#x20;` spacing in the Mr. Robot quotation. Keep the JSON editorial source and JavaScript browser mirror identical, preserve the existing 21 entries, and verify rendering, clip count, filtering, and sorting before delivery. The user authorized committing and pushing this update to GitHub with the message “Cultural Influences updates”.
+
+Metadata references: [Netflix cast and release information](https://about.netflix.com/en/news/dont-look-up-trailer-jennifer-lawrence-leonardo-dicaprio-adam-mckay), [Mr. Robot pilot episode listing](https://tv.apple.com/us/episode/eps10hellofriendmov/umc.cmc.6jr7xu6tjnkturva1ra1uznpc?showId=umc.cmc.306sepo05euzg2r68zzsa02up). The new movie entry uses the December 10, 2021 theatrical release; the television entry uses the June 24, 2015 broadcast date.
+
+Verification completed: all 23 entries render locally; both new thumbnails load; Movie and Television filters each show seven clips; clip-number and date sorting work; no browser console errors were recorded. The JSON and JavaScript data match, the original 21 records are unchanged, and both new editorial sections match the approved drafts. Active HTML parsing and whitespace checks pass.
+
+Approved clip titles: clip 22 is “Dr. Mindy Snaps”; clip 23 is “Elliot’s Disillusionment”. These replace the initial quotation-based titles.
+
+Cultural Influences typography: italicise movie and television work titles, including named episodes, in Summary and Why It Matters only. Use safe rendering of plain-text editorial data; preserve quotation formatting. Include references to films mentioned within music-video entries, such as Selma.
+
 ## 9. Editing Conventions
 
 - Every page currently carries its own copy of the shared header/footer/CSS — a known, temporary state of affairs pending the Astro migration. Until then, cross-page changes (nav links, palette, version pill) must be applied to every file individually.

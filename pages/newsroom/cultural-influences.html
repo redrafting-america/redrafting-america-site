@@ -503,6 +503,38 @@
         }
       }
 
+      // Editorial fields stay plain text. Match known screen-work titles only,
+      // escaping every segment before adding the emphasis markup ourselves.
+      var screenTitlePattern;
+
+      function prepareScreenTitles() {
+        // Aliases cover prose spelling; Selma is referenced by the Glory entry.
+        var titles = ['West Wing', 'Mr. Smith Goes to Washington', 'Selma'];
+        clips.forEach(function (clip) {
+          if (clip.media_type !== 'Movie' && clip.media_type !== 'Television') return;
+          titles.push(clip.media_title);
+          if (clip.episode_title && !/^(the )?pilot$/i.test(clip.episode_title)) {
+            titles.push(clip.episode_title);
+          }
+        });
+        var alternatives = Array.from(new Set(titles)).sort(function (a, b) {
+          return b.length - a.length;
+        }).map(function (title) {
+          return title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/['’]/g, "['’]");
+        });
+        screenTitlePattern = new RegExp('\\b(' + alternatives.join('|') + ')\\b', 'gi');
+      }
+
+      function formatEditorialText(text) {
+        return String(text || '').split(screenTitlePattern).map(function (part, index, parts) {
+          // Cassian Andor is a character name, not a reference to the series.
+          if (/^Andor$/i.test(part) && /Cassian\s+$/i.test(parts[index - 1] || '')) {
+            return escapeHtml(part);
+          }
+          return index % 2 ? '<em>' + escapeHtml(part) + '</em>' : escapeHtml(part);
+        }).join('');
+      }
+
       function formatDate(dateStr) {
         if (!dateStr) return '';
         var d = new Date(dateStr + 'T00:00:00');
@@ -552,10 +584,10 @@
                 (thumb ? '<a class="clip-thumb" href="' + escapeHtml(c.youtube_link) + '" target="_blank" rel="noopener noreferrer"><img src="' + thumb + '" alt="' + escapeHtml(c.media_title) + '" loading="lazy" /></a>' : '') +
               '</div>' +
               '<span class="field-label">Summary</span>' +
-              '<p>' + escapeHtml(c.summary) + '</p>' +
+              '<p>' + formatEditorialText(c.summary) + '</p>' +
               (c.key_quote ? '<blockquote>' + escapeHtml(c.key_quote) + '</blockquote>' : '') +
               '<span class="field-label">Why It Matters</span>' +
-              '<p>' + escapeHtml(c.why_it_matters) + '</p>' +
+              '<p>' + formatEditorialText(c.why_it_matters) + '</p>' +
             '</article>'
           );
         }).join('');
@@ -564,6 +596,7 @@
       Promise.resolve(window.UTOPIA_CULTURAL_INFLUENCES || [])
         .then(function (data) {
           clips = data;
+          prepareScreenTitles();
 
           var types = Array.from(new Set(clips.map(function (c) { return c.media_type; }))).sort();
           types.forEach(function (t) {
