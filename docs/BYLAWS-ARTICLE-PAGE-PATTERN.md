@@ -1,8 +1,8 @@
 # Bylaws Article Page Pattern
 
-**Status:** Approved design pattern  
-**Approved:** September 17, 2026  
-**Reference implementation:** `pages/about/bylaws-preview-article-xxiii.html`  
+**Status:** Approved design pattern
+**Approved:** September 17, 2026
+**Reference implementation:** `pages/about/bylaws-preview-article-xxiii.html`
 **Reference source:** Article XXIII, *Ex Uno Floremus*
 
 This specification preserves the approved design for presenting a complete Bylaws Article on the website. It governs the eventual full-Article pages after their text is finalized and publication is separately authorized. The Article XXIII page is a temporary, unlisted demonstration of the pattern; its presence does not authorize publication of the remaining unfinished Articles.
@@ -122,4 +122,3 @@ Before any full Article page is published:
 - Confirm the browser console has no errors or warnings caused by the Article page.
 - Confirm the static-site build and Cloudflare dry run pass.
 - After deployment, repeat the structural, navigation, responsive, and live-content checks on the canonical public URL.
-
