@@ -82,6 +82,15 @@ This list is intentionally shorter than the project's original 2025 concept docu
 
 ## 2. Current Structure (scalable static layout)
 
+### Approved Bylaws Article page pattern (September 17, 2026)
+
+The approved full-Article reading design is documented in
+[`docs/BYLAWS-ARTICLE-PAGE-PATTERN.md`](docs/BYLAWS-ARTICLE-PAGE-PATTERN.md).
+It preserves the nested H1–H4 hierarchy, exact controlled-document numbering,
+responsive **In this Article** outline, Article banner treatment, content-fidelity
+requirements, temporary-preview safeguards, and reload-free same-page section
+navigation demonstrated by the Article XXIII preview.
+
 ### Approved information-architecture scaffold (August 1, 2026)
 
 The approved scaffold expands the subject hierarchy without adding unfinished destinations to the main navigation. Every unfinished HTML scaffold carries a `noindex` directive until its public content is reviewed.
