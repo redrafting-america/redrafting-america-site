@@ -2,6 +2,130 @@
   max-width: 78ch;
 }
 
+.bylaws-article-hero .article-banner {
+  margin: 1.5rem 0;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  color: var(--article-ink);
+  background: var(--article-color);
+}
+
+.bylaws-article-hero .article-number {
+  display: block;
+  margin-bottom: 0.4rem;
+  font: 700 0.78rem/1.3 "IBM Plex Mono", ui-monospace, monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.bylaws-article-hero .article-banner h1 {
+  margin: 0;
+  color: inherit;
+}
+
+.bylaws-article h2,
+.bylaws-article h3,
+.bylaws-article h4 {
+  scroll-margin-top: calc(var(--shell-header-height, 84px) + 1rem);
+  color: var(--navy);
+}
+
+.bylaws-article h2 {
+  margin-top: 2.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--gold);
+}
+
+.bylaws-article h3 { margin-top: 2rem; }
+.bylaws-article h4 { margin-top: 1.5rem; }
+
+.bylaws-section .article-introduction,
+.bylaws-section .section-introduction {
+  color: var(--navy);
+  font-style: italic;
+}
+
+.bylaws-section .article-introduction {
+  margin-top: 0;
+  font-size: clamp(1.15rem, 2vw, 1.35rem);
+}
+
+.bylaws-section .list-introduction { margin-bottom: 0.4rem; }
+
+.bylaws-section ol,
+.bylaws-section ul {
+  margin: 0.6rem 0 1.5rem;
+  padding-left: 2rem;
+  color: #2f3d48;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(1.02rem, 1.4vw, 1.14rem);
+  line-height: 1.7;
+}
+
+.bylaws-section li + li { margin-top: 0.45rem; }
+
+.bylaws-section blockquote {
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  border-left: 4px solid var(--gold);
+  color: var(--navy);
+  background: #f4ead4;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(1.05rem, 1.5vw, 1.18rem);
+  line-height: 1.7;
+}
+
+.bylaws-table-wrap {
+  max-width: 100%;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+.bylaws-section table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #2f3d48;
+  background: var(--paper-light);
+  font: 500 0.92rem/1.5 "Public Sans", sans-serif;
+}
+
+.bylaws-section th,
+.bylaws-section td {
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  vertical-align: top;
+  text-align: left;
+}
+
+.bylaws-section th {
+  color: var(--navy);
+  background: #f4ead4;
+  font-weight: 700;
+}
+
+.bylaws-figure {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.bylaws-figure img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.bylaws-figure figcaption,
+.bylaws-section .figure-caption {
+  margin-top: 0.65rem;
+  color: #53606b;
+  font: 600 0.82rem/1.5 "Public Sans", sans-serif;
+}
+
+.bylaws-section .figure-caption {
+  text-align: center;
+}
+
 .bylaws-section p {
   color: #2f3d48;
   font-family: "Fraunces", Georgia, serif;

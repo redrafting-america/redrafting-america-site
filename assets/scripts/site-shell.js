@@ -89,10 +89,11 @@
     var isBylawsIndex = /\/(?:pages\/about\/)?bylaws(?:\.html)?\/?$/.test(path);
     var isBylawsPreamble = /\/pages\/about\/bylaws-preamble(?:\.html)?\/?$/.test(path);
     var isBylawsEpilogue = /\/pages\/about\/bylaws-epilogue(?:\.html)?\/?$/.test(path);
+    var bylawsArticleMatch = path.match(/\/pages\/about\/bylaws-article-([ivx]+)(?:\.html)?\/?$/);
     var key = 'home';
     var category = 'Home';
 
-    if (isBylawsIndex || isBylawsPreamble || isBylawsEpilogue || path.indexOf('/pages/about/') !== -1 || /\/mission\.html$/.test(path)) {
+    if (isBylawsIndex || isBylawsPreamble || isBylawsEpilogue || bylawsArticleMatch || path.indexOf('/pages/about/') !== -1 || /\/mission\.html$/.test(path)) {
       key = 'about'; category = 'About';
     } else if (path.indexOf('/pages/constitution2/') !== -1) {
       key = 'constitution'; category = 'Constitution v2.0';
@@ -144,6 +145,10 @@
     } else if (isBylawsPreamble || isBylawsEpilogue) {
       section = 'Bylaws';
       sectionHref = 'pages/about/bylaws.html';
+    } else if (bylawsArticleMatch) {
+      section = 'Bylaws';
+      sectionHref = 'pages/about/bylaws.html';
+      page = 'Article ' + bylawsArticleMatch[1].toUpperCase();
     }
 
     return { key: key, category: category, page: page, section: section, sectionHref: sectionHref };

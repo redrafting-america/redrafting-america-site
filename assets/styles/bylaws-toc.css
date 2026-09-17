@@ -66,6 +66,13 @@
   text-decoration: none;
 }
 
+.bylaws-entry h2 a:hover,
+.bylaws-entry h2 a:focus-visible {
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.14em;
+}
+
 .bylaws-entry .introduction {
   max-width: 78ch;
   margin: 0;
