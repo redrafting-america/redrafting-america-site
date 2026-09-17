@@ -1,0 +1,42 @@
+.bylaws-section {
+  max-width: 78ch;
+}
+
+.bylaws-section p {
+  color: #2f3d48;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(1.05rem, 1.5vw, 1.18rem);
+  line-height: 1.8;
+}
+
+.bylaws-section .opening-line,
+.bylaws-section .closing-line {
+  color: var(--navy);
+  font-size: clamp(1.25rem, 2.2vw, 1.55rem);
+}
+
+.bylaws-section .statement {
+  margin: 1.75rem 0;
+  padding: 1rem 1.25rem;
+  border-left: 4px solid var(--gold);
+  color: var(--navy);
+  background: #f4ead4;
+  font-size: clamp(1.15rem, 2vw, 1.35rem);
+}
+
+.bylaws-page-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+  font: 700 0.75rem/1.4 "IBM Plex Mono", ui-monospace, monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.bylaws-page-nav a {
+  text-decoration: none;
+}
