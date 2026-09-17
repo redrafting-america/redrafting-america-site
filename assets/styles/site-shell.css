@@ -53,6 +53,7 @@
 
 body.site-shell-ready {
   min-height: 100vh;
+  padding-bottom: var(--shell-footer-height, 58px);
 }
 
 body.site-shell-ready > header {
@@ -174,7 +175,7 @@ body.site-shell-ready > header .header-right {
 .site-panel-inner {
   position: sticky;
   top: calc(var(--shell-header-height, 84px) + 1rem);
-  max-height: calc(100vh - var(--shell-header-height, 84px) - 2rem);
+  max-height: calc(100vh - var(--shell-header-height, 84px) - var(--shell-footer-height, 58px) - 2rem);
   overflow-y: auto;
   scrollbar-width: thin;
 }
@@ -480,9 +481,9 @@ body.site-shell-ready > header .header-right {
 /* Full-width footer with left, centered, and right-aligned information. */
 footer,
 .site-footer {
-  position: static !important;
-  inset: auto !important;
-  z-index: auto !important;
+  position: fixed !important;
+  inset: auto 0 0 !important;
+  z-index: 90 !important;
   width: 100%;
   color: var(--shell-muted) !important;
   background: var(--shell-paper) !important;
