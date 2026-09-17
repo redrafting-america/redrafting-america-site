@@ -290,7 +290,7 @@ def page_html(body: str, headings) -> str:
   </main>
   <footer class="site-footer"><div class="footer-inner"><p>&copy; 2026 Redrafting America.</p><p>Veritas Super Omnia &mdash; The Truth Above All Else.</p></div></footer>
   <script src="assets/scripts/site-shell.js?v=20260917-1"></script>
-  <script src="assets/scripts/bylaws-preview.js?v=20260917-1"></script>
+  <script src="assets/scripts/bylaws-preview.js?v=20260917-2"></script>
 </body>
 </html>
 '''
