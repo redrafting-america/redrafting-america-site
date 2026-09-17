@@ -40,6 +40,12 @@
   background: var(--article-color);
 }
 
+.bookend-entry header {
+  color: var(--navy);
+  background: transparent;
+  border-bottom: 1px solid var(--line);
+}
+
 .bylaws-entry .article-number {
   display: block;
   margin-bottom: 0.35rem;
