@@ -57,9 +57,7 @@
 
 .bylaws-entry h2 a {
   color: inherit;
-  text-decoration-color: currentColor;
-  text-decoration-thickness: 0.08em;
-  text-underline-offset: 0.15em;
+  text-decoration: none;
 }
 
 .bylaws-entry .introduction {
