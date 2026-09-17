@@ -86,10 +86,13 @@
 
   function getPageContext(main) {
     var path = window.location.pathname.toLowerCase();
+    var isBylawsIndex = /\/(?:pages\/about\/)?bylaws(?:\.html)?\/?$/.test(path);
+    var isBylawsPreamble = /\/pages\/about\/bylaws-preamble(?:\.html)?\/?$/.test(path);
+    var isBylawsEpilogue = /\/pages\/about\/bylaws-epilogue(?:\.html)?\/?$/.test(path);
     var key = 'home';
     var category = 'Home';
 
-    if (path.indexOf('/pages/about/') !== -1 || /\/mission\.html$/.test(path)) {
+    if (isBylawsIndex || isBylawsPreamble || isBylawsEpilogue || path.indexOf('/pages/about/') !== -1 || /\/mission\.html$/.test(path)) {
       key = 'about'; category = 'About';
     } else if (path.indexOf('/pages/constitution2/') !== -1) {
       key = 'constitution'; category = 'Constitution v2.0';
@@ -126,6 +129,21 @@
     if (fieldNoteNumber && isDraftingRoomFieldNote) {
       section = 'The Drafting Room';
       sectionHref = 'pages/community/drafting-room/index.html';
+    }
+
+    if (isBylawsIndex) {
+      page = 'Bylaws';
+      var articleId = window.location.hash.slice(1);
+      var article = articleId ? document.getElementById(articleId) : null;
+      if (article && article.classList.contains('bylaws-entry')) {
+        section = 'Bylaws';
+        sectionHref = 'pages/about/bylaws.html';
+        var articleNumber = article.querySelector('.article-number');
+        page = articleNumber ? articleNumber.textContent.trim() : 'Article';
+      }
+    } else if (isBylawsPreamble || isBylawsEpilogue) {
+      section = 'Bylaws';
+      sectionHref = 'pages/about/bylaws.html';
     }
 
     return { key: key, category: category, page: page, section: section, sectionHref: sectionHref };
@@ -478,7 +496,13 @@
     var music = normalizeFooter(footer);
     initializeAudio(music);
     var headerInner = header.querySelector(':scope > .header-inner') || header;
-    headerInner.appendChild(buildBreadcrumb(context));
+    var breadcrumb = buildBreadcrumb(context);
+    headerInner.appendChild(breadcrumb);
+    window.addEventListener('hashchange', function () {
+      var nextBreadcrumb = buildBreadcrumb(getPageContext(main));
+      breadcrumb.replaceWith(nextBreadcrumb);
+      breadcrumb = nextBreadcrumb;
+    });
 
     var shell = element('div', 'site-shell-middle');
     var content = element('div', 'site-shell-content');
