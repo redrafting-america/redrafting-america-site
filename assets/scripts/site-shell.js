@@ -13,11 +13,7 @@
         { label: 'Our Story', future: true },
         { label: 'Mission', href: 'pages/about/mission.html' },
         { label: 'Bylaws', href: 'pages/about/bylaws.html' },
-        { label: 'Leadership', href: 'pages/about/leadership.html' },
-        { label: 'Contributors & Advisors', future: true },
-        { label: 'Governance', future: true },
-        { label: 'Transparency & Accountability', future: true },
-        { label: 'Project Roadmap', future: true }
+        { label: 'Leadership', href: 'pages/about/leadership.html' }
       ]
     },
     {
