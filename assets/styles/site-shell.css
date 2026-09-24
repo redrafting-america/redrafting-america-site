@@ -53,7 +53,7 @@
 
 body.site-shell-ready {
   min-height: 100vh;
-  padding-bottom: var(--shell-footer-height, 58px);
+  padding-bottom: var(--shell-footer-height, 98px);
 }
 
 body.site-shell-ready > header {
@@ -96,7 +96,7 @@ body.site-shell-ready > header .header-right {
 .site-shell-middle {
   display: grid;
   grid-template-columns: var(--shell-left-width) minmax(0, 1fr) var(--shell-right-width);
-  min-height: calc(100vh - var(--shell-header-height, 84px) - var(--shell-footer-height, 58px));
+  min-height: calc(100vh - var(--shell-header-height, 84px) - var(--shell-footer-height, 98px));
 }
 
 .site-shell-content {
@@ -175,7 +175,7 @@ body.site-shell-ready > header .header-right {
 .site-panel-inner {
   position: sticky;
   top: calc(var(--shell-header-height, 84px) + 1rem);
-  max-height: calc(100vh - var(--shell-header-height, 84px) - var(--shell-footer-height, 58px) - 2rem);
+  max-height: calc(100vh - var(--shell-header-height, 84px) - var(--shell-footer-height, 98px) - 2rem);
   overflow-y: auto;
   scrollbar-width: thin;
 }
@@ -485,6 +485,11 @@ footer,
   inset: auto 0 0 !important;
   z-index: 90 !important;
   width: 100%;
+  height: 98px !important;
+  min-height: 98px !important;
+  box-sizing: border-box;
+  margin: 0 !important;
+  padding: 0 !important;
   color: var(--shell-muted) !important;
   background: var(--shell-paper) !important;
   border-top: 1px solid var(--shell-line) !important;
@@ -493,15 +498,25 @@ footer,
 footer .footer-inner,
 .site-footer .footer-inner {
   display: grid !important;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) !important;
+  grid-template-columns: max-content minmax(0, 1fr) max-content !important;
   align-items: center !important;
   gap: 1rem !important;
   width: 100% !important;
+  height: 98px !important;
   max-width: none !important;
-  min-height: 58px;
+  min-height: 98px !important;
+  box-sizing: border-box;
   margin: 0 !important;
   padding: 0.75rem 2rem !important;
+  font-size: 13.3333px !important;
+  line-height: 1.35 !important;
   text-align: initial !important;
+}
+
+footer .footer-inner > *,
+.site-footer .footer-inner > * {
+  font-size: 13.3333px !important;
+  line-height: 1.35 !important;
 }
 
 .footer-inner > .footer-copy {
@@ -512,10 +527,14 @@ footer .footer-inner,
 .footer-inner > .footer-motto {
   justify-self: center;
   color: var(--shell-gold) !important;
+  white-space: nowrap;
 }
 .footer-inner > .footer-updated {
-  justify-self: end;
+  justify-self: stretch;
+  min-width: 0;
+  overflow: hidden;
   color: var(--shell-muted) !important;
+  text-align: right;
   white-space: nowrap;
 }
 .footer-inner > .footer-music { display: none; }
@@ -596,8 +615,8 @@ footer .footer-inner,
 
   footer .footer-inner,
   .site-footer .footer-inner {
-    grid-template-columns: var(--shell-side-width) minmax(0, 1fr) var(--shell-side-width) !important;
-    gap: 0 !important;
+    grid-template-columns: max-content minmax(0, 1fr) max-content !important;
+    gap: 1rem !important;
     padding-inline: 0 !important;
   }
 
@@ -715,22 +734,28 @@ footer .footer-inner,
   .site-drawer-utilities { margin-top: 1.1rem; }
 }
 
-@media (max-width: 900px) {
-  footer .footer-inner,
-  .site-footer .footer-inner {
-    grid-template-columns: 1fr !important;
-    justify-items: center !important;
-    gap: 0.35rem !important;
-    padding: 1rem !important;
-    text-align: center !important;
-  }
+footer .footer-inner.is-stacked,
+.site-footer .footer-inner.is-stacked {
+  grid-template-columns: minmax(0, 1fr) !important;
+  align-content: center !important;
+  justify-items: center !important;
+  gap: 0.35rem !important;
+  padding: 0.75rem 0.5rem !important;
+  text-align: center !important;
+}
 
-  .footer-inner > .footer-copy,
-  .footer-inner > .footer-motto,
-  .footer-inner > .footer-updated {
-    justify-self: center;
-    white-space: normal;
-  }
+.footer-inner.is-stacked > .footer-copy,
+.footer-inner.is-stacked > .footer-motto,
+.footer-inner.is-stacked > .footer-updated {
+  justify-self: center;
+  white-space: nowrap;
+}
+
+.footer-inner.is-stacked > .footer-updated {
+  justify-self: stretch;
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
 }
 
 @media (max-width: 640px) {

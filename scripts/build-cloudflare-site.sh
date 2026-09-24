@@ -33,6 +33,14 @@ done
 cp -R -- "${PROJECT_ROOT}/assets" "${OUTPUT_DIRECTORY}/assets"
 cp -R -- "${PROJECT_ROOT}/pages" "${OUTPUT_DIRECTORY}/pages"
 
+# Record one publication-boundary instant in the shared footer script. Wrangler
+# runs this build immediately before every deployment, so every public page
+# reports the same release time without relying on individual file timestamps.
+RDA_PUBLICATION_TIMESTAMP="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
+node "${SCRIPT_DIRECTORY}/stamp-publication-time.mjs" \
+    "${OUTPUT_DIRECTORY}/assets/scripts/site-shell.js" \
+    "$RDA_PUBLICATION_TIMESTAMP"
+
 # Finder metadata is not website content and must never be uploaded.
 find "$OUTPUT_DIRECTORY" -type f -name '.DS_Store' -delete
 

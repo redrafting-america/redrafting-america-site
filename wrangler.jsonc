@@ -3,6 +3,9 @@
   "name": "redrafting-america-site",
   "main": "./src/index.js",
   "compatibility_date": "2026-08-31",
+  "build": {
+    "command": "./scripts/build-cloudflare-site.sh"
+  },
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",

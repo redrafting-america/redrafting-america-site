@@ -25,6 +25,17 @@ jobs:
           test -f robots.txt
           test -f sitemap.xml
 
+      - name: Build publication-ready site
+        run: ./scripts/build-cloudflare-site.sh
+
+      - name: Check publication timestamp injection
+        run: |
+          ! grep -q '__RDA_PUBLICATION_TIMESTAMP__' dist/assets/scripts/site-shell.js
+          grep -qE "var PUBLICATION_TIMESTAMP = '[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z';" dist/assets/scripts/site-shell.js
+          grep -q "Philly Daylight Time" dist/assets/scripts/site-shell.js
+          grep -q "Philly Standard Time" dist/assets/scripts/site-shell.js
+          grep -q "desktopTablet: 'Updated: ' + fullDate + ' • '" dist/assets/scripts/site-shell.js
+
       - name: Parse active HTML files
         run: |
           python3 - <<'PY'

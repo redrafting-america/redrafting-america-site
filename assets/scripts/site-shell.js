@@ -1,6 +1,11 @@
 (function () {
   'use strict';
 
+  /* Replaced in dist by scripts/build-cloudflare-site.sh immediately before
+     Wrangler deploys the public site. Source previews fall back to the local
+     document modification time. */
+  var PUBLICATION_TIMESTAMP = '__RDA_PUBLICATION_TIMESTAMP__';
+
   if (document.documentElement.dataset.siteShellLoaded === 'true') return;
   document.documentElement.dataset.siteShellLoaded = 'true';
 
@@ -433,33 +438,149 @@
     while (inner.firstChild) inner.removeChild(inner.firstChild);
 
     var copy = element('span', 'footer-copy');
-    copy.innerHTML = '&copy; 2026 Redrafting America. All Rights Reserved.';
+    copy.innerHTML = '&copy; 2026 Redrafting America.';
     var motto = element('span', 'footer-motto', 'Veritas Super Omnia');
     var updated = element('span', 'footer-updated');
     updated.id = 'last-updated';
-
-    var modified = new Date(document.lastModified);
-    var dateOptions = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      timeZone: 'America/New_York'
-    };
-    var timeOptions = {
-      hour: 'numeric',
-      minute: '2-digit',
-      timeZone: 'America/New_York'
-    };
-    var formattedDate = modified.toLocaleDateString('en-US', dateOptions);
-    var formattedTime = modified.toLocaleTimeString('en-US', timeOptions);
-    updated.textContent = 'Updated: ' + formattedDate + ' at ' + formattedTime + ' Philly time';
+    updated.setAttribute('aria-label', 'Website publication time');
 
     inner.classList.remove('has-music');
     inner.appendChild(copy);
     inner.appendChild(motto);
     inner.appendChild(updated);
     inner.appendChild(music);
+    initializePublicationTime(updated, inner);
     return music;
+  }
+
+  function publicationDate() {
+    var published = new Date(PUBLICATION_TIMESTAMP);
+    if (!Number.isNaN(published.getTime())) return published;
+
+    var localModified = new Date(document.lastModified);
+    return Number.isNaN(localModified.getTime()) ? new Date() : localModified;
+  }
+
+  function phillyZoneLabel(date) {
+    var zoneParts = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/New_York',
+      timeZoneName: 'long'
+    }).formatToParts(date);
+    var zone = zoneParts.find(function (part) { return part.type === 'timeZoneName'; });
+    return zone && zone.value.indexOf('Daylight') !== -1
+      ? 'Philly Daylight Time'
+      : 'Philly Standard Time';
+  }
+
+  function publicationTimeFormats(date) {
+    var fullDate = date.toLocaleDateString('en-US', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      timeZone: 'America/New_York'
+    });
+    var shortDate = date.toLocaleDateString('en-US', {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      timeZone: 'America/New_York'
+    });
+    var compactDate = date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      timeZone: 'America/New_York'
+    });
+    var time = date.toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      timeZone: 'America/New_York'
+    });
+
+    return {
+      desktopTablet: 'Updated: ' + fullDate + ' • ' + time + ' ' + phillyZoneLabel(date),
+      mobileLandscape: 'Updated: ' + shortDate + ' • ' + time + ' Philly Time',
+      mobilePortrait: 'Updated: ' + compactDate + ' • ' + time + ' Philly'
+    };
+  }
+
+  function isMobilePhone() {
+    var userAgent = navigator.userAgent || '';
+    if (/iPad|Tablet|Android(?!.*Mobile)/i.test(userAgent)) {
+      return false;
+    }
+    if (/Android.+Mobile|iPhone|iPod/i.test(userAgent)) {
+      return true;
+    }
+    if (navigator.userAgentData && typeof navigator.userAgentData.mobile === 'boolean') {
+      var platform = navigator.userAgentData.platform || '';
+      return navigator.userAgentData.mobile && /Android|iOS/i.test(platform);
+    }
+    return false;
+  }
+
+  function initializePublicationTime(updated, inner) {
+    var formats = publicationTimeFormats(publicationDate());
+    var phone = isMobilePhone();
+    var landscape = window.matchMedia('(orientation: landscape)');
+    var copy = inner.querySelector('.footer-copy');
+    var motto = inner.querySelector('.footer-motto');
+    var scheduled = false;
+
+    function preferredFormats() {
+      if (!phone) return [formats.desktopTablet, formats.mobileLandscape, formats.mobilePortrait];
+      var isLandscape = landscape.matches || window.innerWidth > window.innerHeight;
+      return isLandscape
+        ? [formats.mobileLandscape, formats.mobilePortrait]
+        : [formats.mobilePortrait];
+    }
+
+    function selectFormat() {
+      scheduled = false;
+      inner.classList.remove('is-stacked');
+      var innerStyle = window.getComputedStyle(inner);
+      var availableWidth = inner.clientWidth -
+        Number.parseFloat(innerStyle.paddingLeft) -
+        Number.parseFloat(innerStyle.paddingRight);
+      var gap = Number.parseFloat(innerStyle.columnGap) || 0;
+      var requiredFixedWidth = copy && motto
+        ? copy.scrollWidth + motto.scrollWidth + (gap * 2)
+        : Number.POSITIVE_INFINITY;
+      var selectedFormat = null;
+
+      preferredFormats().some(function (format) {
+        updated.textContent = format;
+        var requiredWidth = requiredFixedWidth + updated.scrollWidth;
+        if (requiredWidth <= availableWidth + 1) {
+          selectedFormat = format;
+          return true;
+        }
+        return false;
+      });
+
+      if (!selectedFormat) {
+        selectedFormat = formats.mobilePortrait;
+        updated.textContent = selectedFormat;
+        inner.classList.add('is-stacked');
+      }
+
+      updated.setAttribute('aria-label', selectedFormat);
+      updated.title = selectedFormat;
+    }
+
+    function scheduleSelection() {
+      if (scheduled) return;
+      scheduled = true;
+      window.requestAnimationFrame(selectFormat);
+    }
+
+    scheduleSelection();
+    window.addEventListener('resize', scheduleSelection);
+    if (landscape.addEventListener) landscape.addEventListener('change', scheduleSelection);
+    else landscape.addListener(scheduleSelection);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleSelection);
   }
 
   function openDrawer(trigger, drawer, closeButton) {

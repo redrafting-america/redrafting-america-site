@@ -10,6 +10,11 @@
 The production site is packaged as static assets for Cloudflare Workers. Run
 `./scripts/build-cloudflare-site.sh` to create the controlled `dist/` output,
 then validate the Cloudflare upload with `npx wrangler deploy --dry-run`.
+Wrangler runs that same build automatically before every deployment. The build
+stamps one publication time into the shared footer script, so all public pages
+show the latest website update in Philadelphia time. The footer selects the
+full format on desktop and tablet, the abbreviated format on phones in
+landscape, and the numeric format on phones in portrait.
 
 Only the active public site is copied into `dist/`: the root public files,
 `assets/`, and `pages/`. Historical `archive/`, working `site-work/`, reusable
