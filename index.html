@@ -280,7 +280,7 @@
     }
     .lexicon-feature .preview-card {
       width: 100%;
-      max-width: 440px;
+      max-width: 680px;
       justify-self: end;
     }
   }
@@ -324,6 +324,10 @@
     border: 0;
     background: transparent;
     cursor: zoom-in;
+  }
+  .lexicon-open img {
+    width: 100%;
+    height: auto;
   }
   .lexicon-open:focus-visible {
     outline: 2px solid var(--gold);
@@ -651,12 +655,8 @@
       <div class="split reverse lexicon-feature">
         <div class="preview-card">
           <button class="lexicon-open" id="lexicon-open" type="button" aria-haspopup="dialog" aria-controls="lexicon-dialog" aria-label="Enlarge the Constitutional Lexicon">
-            <img src="assets/images/constitution-v2-lexicon-portrait.png?v=20260831-1" alt="Portrait edition of the Redrafting America Constitution v2.0 Official Constitutional Lexicon, listing ten constitutional institutions with their functions and principles" loading="lazy" />
+            <img src="assets/images/constitution-v2-lexicon.png?v=20260924-1" width="2000" height="1546" alt="Landscape edition of the Redrafting America Constitution v2.0 Official Constitutional Lexicon, listing ten constitutional institutions with their functions and principles" loading="lazy" />
           </button>
-          <div class="preview-caption">
-            <span>Constitution v2.0 Reference Standard &middot; Rev. 6</span>
-            <button id="lexicon-caption-open" type="button" aria-haspopup="dialog" aria-controls="lexicon-dialog">View full size &rarr;</button>
-          </div>
         </div>
         <div>
           <span class="eyebrow">A Look Inside</span>
@@ -673,8 +673,8 @@
 
   <dialog class="seal-dialog" id="lexicon-dialog" aria-label="Constitutional Lexicon full-size viewer">
     <button class="seal-dialog-close" id="lexicon-dialog-close" type="button" aria-label="Close full-size Constitutional Lexicon">&times;</button>
-    <img src="assets/images/constitution-v2-lexicon-portrait.png?v=20260831-1" width="1024" height="1536" alt="Full-size portrait edition of the Redrafting America Constitution v2.0 Official Constitutional Lexicon" />
-    <a class="seal-dialog-original" href="assets/images/constitution-v2-lexicon-portrait.png?v=20260831-1" target="_blank" rel="noopener">Open original 1024-by-1536 image</a>
+    <img src="assets/images/constitution-v2-lexicon-4k.png?v=20260924-1" width="3840" height="2967" alt="Full-size landscape edition of the Redrafting America Constitution v2.0 Official Constitutional Lexicon" />
+    <a class="seal-dialog-original" href="assets/images/constitution-v2-lexicon-4k.png?v=20260924-1" target="_blank" rel="noopener">Open 3840-by-2967 image</a>
   </dialog>
 
   <!-- ================= CITIZEN PORTAL ================= -->
@@ -821,14 +821,12 @@
   <script>
     (function () {
       var imageButton = document.getElementById('lexicon-open');
-      var captionButton = document.getElementById('lexicon-caption-open');
       var closeButton = document.getElementById('lexicon-dialog-close');
       var dialog = document.getElementById('lexicon-dialog');
-      if (!imageButton || !captionButton || !closeButton || !dialog || !dialog.showModal) return;
+      if (!imageButton || !closeButton || !dialog || !dialog.showModal) return;
 
       function openDialog() { dialog.showModal(); }
       imageButton.addEventListener('click', openDialog);
-      captionButton.addEventListener('click', openDialog);
       closeButton.addEventListener('click', function () { dialog.close(); });
       dialog.addEventListener('click', function (event) {
         if (event.target === dialog) dialog.close();
