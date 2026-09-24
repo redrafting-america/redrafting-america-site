@@ -184,6 +184,23 @@ h3 { font-size: 1.15rem; }
 .card h3 { margin: 0 0 0.45rem; }
 .card p { margin: 0; color: #4b5964; }
 
+.card-status {
+  display: inline-block;
+  margin-bottom: 0.65rem;
+  padding: 0.25rem 0.45rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font: 700 0.64rem/1 "IBM Plex Mono", ui-monospace, monospace;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.card-status.is-available { color: #196f3d; }
+.card-status.is-outline { color: #7b571c; }
+.card-status.is-planned { color: #65717a; }
+
+.card h3 a { text-decoration-thickness: 0.07em; text-underline-offset: 0.14em; }
+
 .prose { max-width: 78ch; }
 .prose h2 { margin-top: 2.4rem; }
 .prose h2:first-child { margin-top: 0; }

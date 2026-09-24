@@ -10,10 +10,14 @@
       label: 'About',
       href: 'pages/about/index.html',
       items: [
-        { label: 'Origins', future: true },
-        { label: 'Mission Statement', href: 'pages/about/mission.html' },
+        { label: 'Our Story', future: true },
+        { label: 'Mission', href: 'pages/about/mission.html' },
         { label: 'Bylaws', href: 'pages/about/bylaws.html' },
         { label: 'Leadership', href: 'pages/about/leadership.html' },
+        { label: 'Contributors & Advisors', future: true },
+        { label: 'Governance', future: true },
+        { label: 'Transparency & Accountability', future: true },
+        { label: 'Project Roadmap', future: true }
       ]
     },
     {
@@ -23,7 +27,10 @@
       items: [
         { label: 'Declaration Of Reformation', future: true },
         { label: 'Preamble', future: true },
-        { label: 'Articles', future: true }
+        { label: 'Articles', future: true },
+        { label: 'Explainers', future: true },
+        { label: 'Comparison', future: true },
+        { label: 'Version History', future: true }
       ]
     },
     {
@@ -31,9 +38,10 @@
       label: 'Learn',
       href: 'pages/learn/index.html',
       items: [
-        { label: 'Companion Guides', future: true },
+        { label: 'Constitutional Glossary', future: true },
+        { label: 'Plain-Language Guides', future: true },
         { label: 'Case Studies', future: true },
-        { label: 'Tutorials', future: true },
+        { label: 'Teaching Resources', future: true },
         { label: 'FAQ', future: true }
       ]
     },
@@ -54,9 +62,10 @@
       label: 'Newsroom',
       href: 'pages/newsroom/index.html',
       items: [
+        { label: 'Board Minutes', future: true },
         { label: 'Press Releases', future: true },
-        { label: 'Media Inquiries', future: true },
         { label: 'News Coverage', future: true },
+        { label: 'Media Kit & Inquiries', future: true },
         { label: 'Cultural Influences', href: 'pages/newsroom/cultural-influences.html' }
       ]
     },
@@ -65,10 +74,10 @@
       label: 'Get Involved',
       href: 'pages/get-involved/index.html',
       items: [
-        { label: 'Careers', href: 'pages/get-involved/careers.html' },
-        { label: 'Contact', href: 'index.html#contact' },
+        { label: 'Careers & Leadership', href: 'pages/get-involved/careers.html' },
         { label: 'Partnerships', future: true },
-        { label: 'Donate', future: true }
+        { label: 'Donate', future: true },
+        { label: 'Contact', href: 'index.html#contact' }
       ]
     }
   ];
