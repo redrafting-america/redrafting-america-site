@@ -27,8 +27,9 @@ the Cloudflare deployment.
 The Worker serves the active static assets only on
 `www.redraftingamerica.org`. Requests for `redraftingamerica.org`,
 `redraftingamerica.us`, `www.redraftingamerica.us`, `redrafting.us`, and
-`www.redrafting.us` receive a permanent redirect to the same path and query on
-the canonical `https://www.redraftingamerica.org` origin.
+`www.redrafting.us`, as well as the legacy `utopiaproject.us` and
+`www.utopiaproject.us` hosts, receive a permanent redirect to the same path and
+query on the canonical `https://www.redraftingamerica.org` origin.
 
 > **Domain discrepancy — unresolved.** This README names `www.redraftingamerica.org` as canonical, while the GitHub organization profile lists `https://redrafting.us`. Both are public and they disagree. Settle which is authoritative and correct the other.
 

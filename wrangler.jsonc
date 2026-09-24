@@ -19,7 +19,9 @@
     { "pattern": "www.redraftingamerica.us", "custom_domain": true },
     { "pattern": "redraftingamerica.us", "custom_domain": true },
     { "pattern": "www.redrafting.us", "custom_domain": true },
-    { "pattern": "redrafting.us", "custom_domain": true }
+    { "pattern": "redrafting.us", "custom_domain": true },
+    { "pattern": "www.utopiaproject.us", "custom_domain": true },
+    { "pattern": "utopiaproject.us", "custom_domain": true }
   ],
   "observability": {
     "enabled": true,

@@ -25,6 +25,36 @@ jobs:
           test -f robots.txt
           test -f sitemap.xml
 
+      - name: Check canonical and legacy Worker domains
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+
+          const config = JSON.parse(fs.readFileSync('wrangler.jsonc', 'utf8'));
+          const configuredDomains = new Set(
+            config.routes
+              .filter((route) => route.custom_domain === true)
+              .map((route) => route.pattern)
+          );
+          const requiredDomains = [
+            'www.redraftingamerica.org',
+            'redraftingamerica.org',
+            'www.redraftingamerica.us',
+            'redraftingamerica.us',
+            'www.redrafting.us',
+            'redrafting.us',
+            'www.utopiaproject.us',
+            'utopiaproject.us',
+          ];
+
+          const missingDomains = requiredDomains.filter(
+            (domain) => !configuredDomains.has(domain)
+          );
+          if (missingDomains.length > 0) {
+            throw new Error(`Missing Worker custom domains: ${missingDomains.join(', ')}`);
+          }
+          NODE
+
       - name: Build publication-ready site
         run: ./scripts/build-cloudflare-site.sh
 
