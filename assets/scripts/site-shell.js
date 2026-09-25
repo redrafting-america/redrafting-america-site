@@ -78,7 +78,7 @@
         { label: 'Careers & Leadership', href: 'pages/get-involved/careers.html' },
         { label: 'Partnerships', future: true },
         { label: 'Donate', future: true },
-        { label: 'Contact', href: 'index.html#contact' }
+        { label: 'Contact', href: 'pages/get-involved/contact.html' }
       ]
     }
   ];

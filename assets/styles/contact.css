@@ -1,0 +1,281 @@
+.contact-main {
+  width: min(1120px, calc(100% - 2rem));
+  margin-inline: auto;
+  padding: 2rem 0 5rem;
+}
+
+.contact-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(310px, 0.65fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: center;
+  overflow: hidden;
+  padding: clamp(2.25rem, 6vw, 5.25rem);
+  color: #fffdf8;
+  background:
+    linear-gradient(135deg, rgba(7, 27, 44, 0.98), rgba(16, 42, 67, 0.94)),
+    repeating-linear-gradient(90deg, transparent 0 38px, rgba(255, 255, 255, 0.04) 38px 39px);
+  border: 1px solid rgba(183, 134, 44, 0.55);
+  box-shadow: 0 24px 60px rgba(7, 27, 44, 0.18);
+}
+
+.contact-hero::before,
+.contact-hero::after {
+  position: absolute;
+  content: "";
+  border: 1px solid rgba(216, 180, 107, 0.22);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.contact-hero::before {
+  width: 28rem;
+  height: 28rem;
+  right: -13rem;
+  top: -15rem;
+}
+
+.contact-hero::after {
+  width: 17rem;
+  height: 17rem;
+  right: -7.5rem;
+  top: -9.5rem;
+}
+
+.contact-hero-copy,
+.contact-card { position: relative; z-index: 1; }
+
+.contact-kicker {
+  margin: 0 0 0.85rem;
+  color: #b7862c;
+  font: 700 0.72rem/1.4 "IBM Plex Mono", ui-monospace, monospace;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.contact-hero .contact-kicker { color: #d8b46b; }
+
+.contact-hero h1 {
+  max-width: 11ch;
+  margin: 0 0 1.25rem;
+  color: #fffdf8;
+  font-size: clamp(2.65rem, 6vw, 5.2rem);
+  letter-spacing: -0.035em;
+}
+
+.contact-lede {
+  max-width: 59ch;
+  margin: 0;
+  color: rgba(255, 253, 248, 0.86);
+  font-size: clamp(1.04rem, 2vw, 1.2rem);
+  line-height: 1.75;
+}
+
+.contact-note {
+  margin: 1.6rem 0 0;
+  color: #d8b46b;
+  font: 500 0.78rem/1.6 "IBM Plex Mono", ui-monospace, monospace;
+}
+
+.contact-card {
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  color: #17233f;
+  background: #fffdf8;
+  border-top: 5px solid #b7862c;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.24);
+}
+
+.contact-card-mark {
+  display: grid;
+  place-items: center;
+  width: 4.4rem;
+  height: 4.4rem;
+  margin-bottom: 1.75rem;
+  color: #102a43;
+  border: 1px solid rgba(183, 134, 44, 0.62);
+  border-radius: 50%;
+  font: 700 1.03rem/1 "Fraunces", Georgia, serif;
+  letter-spacing: 0.06em;
+}
+
+.contact-card-mark span { color: #b7862c; }
+
+.contact-card-label {
+  margin: 0 0 0.75rem;
+  color: #65717a;
+  font: 700 0.67rem/1.3 "IBM Plex Mono", ui-monospace, monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.contact-value {
+  display: block;
+  width: fit-content;
+  color: #102a43;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(1.08rem, 2vw, 1.3rem);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  text-decoration-color: rgba(183, 134, 44, 0.7);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+}
+
+.contact-phone { margin-top: 0.7rem; }
+
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.75rem;
+}
+
+.contact-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.72rem 1rem;
+  color: #102a43;
+  border: 1px solid rgba(16, 42, 67, 0.3);
+  font: 700 0.72rem/1 "IBM Plex Mono", ui-monospace, monospace;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.contact-button:hover,
+.contact-button:focus-visible { color: #7a2530; border-color: #7a2530; }
+
+.contact-button-primary { color: #fffdf8; background: #102a43; border-color: #102a43; }
+.contact-button-primary:hover,
+.contact-button-primary:focus-visible { color: #fffdf8; background: #7a2530; }
+
+.contact-section {
+  margin-top: 1.5rem;
+  padding: clamp(2rem, 5vw, 4rem);
+  background: rgba(255, 253, 248, 0.94);
+  border: 1px solid rgba(16, 42, 67, 0.18);
+  box-shadow: 0 18px 45px rgba(7, 27, 44, 0.08);
+}
+
+.contact-section-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(240px, 0.55fr);
+  column-gap: 3rem;
+  align-items: end;
+  margin-bottom: 2rem;
+}
+
+.contact-section-heading .contact-kicker { grid-column: 1 / -1; }
+.contact-section-heading h2,
+.contact-brief h2 {
+  margin: 0;
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  letter-spacing: -0.02em;
+}
+
+.contact-section-heading > p:last-child {
+  margin: 0;
+  color: #65717a;
+  line-height: 1.7;
+}
+
+.inquiry-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.inquiry-card {
+  min-height: 18rem;
+  padding: 1.6rem;
+  background: #f8f1e4;
+  border: 1px solid rgba(16, 42, 67, 0.16);
+  border-top: 3px solid #b7862c;
+}
+
+.inquiry-number {
+  display: block;
+  margin-bottom: 2.2rem;
+  color: #96691f;
+  font: 700 0.72rem/1 "IBM Plex Mono", ui-monospace, monospace;
+  letter-spacing: 0.12em;
+}
+
+.inquiry-card h3 { margin: 0 0 0.75rem; font-size: 1.35rem; }
+.inquiry-card p { margin: 0 0 1.5rem; color: #4b5964; }
+.inquiry-card > a,
+.inquiry-links a {
+  display: block;
+  width: fit-content;
+  margin-top: 0.55rem;
+  color: #102a43;
+  font-weight: 700;
+  text-decoration-color: #b7862c;
+  text-underline-offset: 0.2em;
+}
+
+.contact-brief {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(320px, 1.2fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+  margin-top: 1.5rem;
+  padding: clamp(2rem, 5vw, 4rem);
+  background: #e3c9f8;
+  border-left: 6px solid #9667b8;
+}
+
+.message-list {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: message;
+}
+
+.message-list li {
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  gap: 1rem;
+  padding: 1.1rem 0;
+  border-top: 1px solid rgba(16, 42, 67, 0.18);
+}
+
+.message-list li:last-child { border-bottom: 1px solid rgba(16, 42, 67, 0.18); }
+.message-list span {
+  color: #102a43;
+  font: 700 0.72rem/1.5 "IBM Plex Mono", ui-monospace, monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.message-list p { margin: 0; color: #38495a; }
+
+@media (max-width: 840px) {
+  .contact-hero,
+  .contact-section-heading,
+  .contact-brief { grid-template-columns: 1fr; }
+  .contact-card { max-width: 31rem; }
+  .contact-section-heading { align-items: start; }
+  .contact-section-heading > p:last-child { margin-top: 1rem; }
+}
+
+@media (max-width: 620px) {
+  .contact-main { width: min(100% - 1rem, 1120px); padding-top: 0.75rem; }
+  .contact-hero,
+  .contact-section,
+  .contact-brief { padding: 1.45rem; }
+  .contact-hero h1 { font-size: clamp(2.35rem, 13vw, 3.6rem); }
+  .inquiry-grid { grid-template-columns: 1fr; }
+  .inquiry-card { min-height: 0; }
+  .message-list li { grid-template-columns: 1fr; gap: 0.35rem; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .contact-button,
+  .contact-value,
+  .inquiry-card a { transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease; }
+}

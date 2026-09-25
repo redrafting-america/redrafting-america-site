@@ -50,6 +50,7 @@ legacy_file_routes=(
     "mission.html:pages/about/mission.html"
     "bylaws.html:pages/about/bylaws.html"
     "careers.html:pages/get-involved/careers.html"
+    "contact.html:pages/get-involved/contact.html"
     "social-media.html:pages/community/social-media.html"
     "cultural-influences.html:pages/newsroom/cultural-influences.html"
     "drafting-room.css:assets/styles/drafting-room.css"

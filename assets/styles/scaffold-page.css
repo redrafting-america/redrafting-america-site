@@ -9,6 +9,8 @@
   --muted: #65717a;
   --line: rgba(16, 42, 67, 0.18);
   --shadow: 0 18px 45px rgba(7, 27, 44, 0.10);
+  --category-bg: #e3e5e9;
+  --category-edge: #89919c;
 }
 
 * { box-sizing: border-box; }
@@ -200,6 +202,45 @@ h3 { font-size: 1.15rem; }
 .card-status.is-planned { color: #65717a; }
 
 .card h3 a { text-decoration-thickness: 0.07em; text-underline-offset: 0.14em; }
+
+/* Main-category landing pages share one information standard while inheriting
+   the color assigned to their navigation category by site-shell.css. */
+.category-index .hero-panel {
+  border-top-color: var(--category-edge);
+  background:
+    linear-gradient(120deg, var(--category-bg), rgba(255, 253, 248, 0.94) 72%);
+}
+
+.category-index .eyebrow { color: var(--category-edge); }
+
+.category-index .content-panel {
+  border-top: 5px solid var(--category-edge);
+}
+
+.category-index .card {
+  display: flex;
+  flex-direction: column;
+  border-left: 4px solid var(--category-edge);
+}
+
+.category-index .card-status.is-planned {
+  color: #4f5963;
+  background: rgba(227, 229, 233, 0.58);
+}
+
+.category-index .category-link {
+  align-self: flex-start;
+  margin-top: 1rem;
+  color: var(--navy);
+  font-weight: 700;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+.category-index .category-link:hover,
+.category-index .category-link:focus-visible {
+  color: #6e4a11;
+}
 
 .prose { max-width: 78ch; }
 .prose h2 { margin-top: 2.4rem; }
