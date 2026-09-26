@@ -238,6 +238,17 @@
   }
   .seal-dialog-original:hover,
   .seal-dialog-original:focus-visible { color: var(--gold); }
+  .diagram-description {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: normal !important;
+    border: 0 !important;
+  }
   .doc-hero .latin {
     font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
     color: var(--gold); font-size: 1.05rem; margin: 0 auto 0.6rem;
@@ -610,7 +621,8 @@
     </section>
 
     <div class="doc-image light">
-      <img src="assets/images/citizen-portal.png" alt="Redrafting America Citizen Portal concept mockup with sixteen secure civic-service categories" loading="lazy" />
+      <img src="assets/images/citizen-portal.png" alt="Redrafting America Citizen Portal concept mockup with sixteen secure civic-service categories" aria-describedby="mission-citizen-portal-description" loading="lazy" />
+      <p class="diagram-description" id="mission-citizen-portal-description">The Citizen Portal concept shows a verified citizen using a secure connection, with sixteen service categories: Identity and Documents; Voting and Civic Participation; Rights, Benefits and Entitlements; Legal Status and Case History; Taxes and Public Finance; Education and Credentials; Employment and Licensing; Property and Registered Assets; Health and Human Services; Transportation and Mobility; Emergency Alerts and Public Safety; Permits and Regulatory Services; Renewals and Expiration Notices; Secure Government Messages; Privacy, Security and Consent; and Public Records and Data Access.</p>
     </div>
 
     <section class="doc-section" id="digital-democracy">

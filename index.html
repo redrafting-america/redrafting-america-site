@@ -341,6 +341,17 @@
     outline-offset: 4px;
     border-radius: 4px;
   }
+  .diagram-description {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: normal !important;
+    border: 0 !important;
+  }
   .seal-dialog {
     width: min(96vw, 1100px);
     max-width: none;
@@ -622,7 +633,7 @@
     <div class="wrap">
       <div class="split reverse lexicon-feature">
         <div class="preview-card">
-          <button class="lexicon-open" id="lexicon-open" type="button" aria-haspopup="dialog" aria-controls="lexicon-dialog" aria-label="Enlarge the Constitutional Lexicon">
+          <button class="lexicon-open" id="lexicon-open" type="button" aria-haspopup="dialog" aria-controls="lexicon-dialog" aria-label="Enlarge the Constitutional Lexicon" aria-describedby="lexicon-description">
             <img src="assets/images/constitution-v2-lexicon-portrait.png?v=20260924-6" width="1500" height="2000" alt="Portrait edition of the Redrafting America Constitution v2.0 Official Constitutional Lexicon, listing ten constitutional institutions with their functions and principles" loading="lazy" />
           </button>
         </div>
@@ -639,7 +650,9 @@
     </div>
   </section>
 
-  <dialog class="seal-dialog" id="lexicon-dialog" aria-label="Constitutional Lexicon full-size viewer">
+  <p class="diagram-description" id="lexicon-description">The lexicon is a table of ten proposed constitutional institutions. The five branches are the Concordium, which enacts laws and represents harmony; the Diligentium, which executes laws and represents diligence; the Aequitium, which interprets laws and represents equity; the Sapientium, which educates and certifies candidates and represents wisdom; and the Veritium, which provides independent oversight and represents truth. Five supporting institutions are the Consilium for state and local counsel; the Virtutium for national defense; the Discernium for intelligence; the Praesidium for executive coordination; and the Aerarium for public finance. The design principles are to unify services, separate powers, eliminate duplication, and preserve accountability. The cited inspirations are the Roman Republic, Latin civic tradition, Sun Yat-sen's five-power constitution, and German eternity clauses.</p>
+
+  <dialog class="seal-dialog" id="lexicon-dialog" aria-label="Constitutional Lexicon full-size viewer" aria-describedby="lexicon-description">
     <button class="seal-dialog-close" id="lexicon-dialog-close" type="button" aria-label="Close full-size Constitutional Lexicon">&times;</button>
     <img src="assets/images/constitution-v2-lexicon-portrait-4k.png?v=20260924-6" width="3000" height="4000" alt="4K portrait edition of the Redrafting America Constitution v2.0 Official Constitutional Lexicon" />
     <a class="seal-dialog-original" href="assets/images/constitution-v2-lexicon-portrait-4k.png?v=20260924-6" target="_blank" rel="noopener">Open 3000-by-4000 image</a>
@@ -650,7 +663,7 @@
     <div class="wrap">
       <div class="split">
         <div class="preview-card">
-          <button class="citizen-portal-open" id="citizen-portal-open" type="button" aria-haspopup="dialog" aria-controls="citizen-portal-dialog" aria-label="Enlarge the Citizen Portal graphic">
+          <button class="citizen-portal-open" id="citizen-portal-open" type="button" aria-haspopup="dialog" aria-controls="citizen-portal-dialog" aria-label="Enlarge the Citizen Portal graphic" aria-describedby="citizen-portal-description">
             <img src="assets/images/citizen-portal.png?v=20260924-1" width="1254" height="1254" alt="Redrafting America Citizen Portal showing sixteen civic-service categories, including identity, voting, public safety, health, permits, privacy, and public records" loading="lazy" />
           </button>
         </div>
@@ -668,7 +681,9 @@
     </div>
   </section>
 
-  <dialog class="seal-dialog" id="citizen-portal-dialog" aria-label="Citizen Portal full-size viewer">
+  <p class="diagram-description" id="citizen-portal-description">The Citizen Portal concept shows a verified citizen using a secure connection, with sixteen service categories: Identity and Documents; Voting and Civic Participation; Rights, Benefits and Entitlements; Legal Status and Case History; Taxes and Public Finance; Education and Credentials; Employment and Licensing; Property and Registered Assets; Health and Human Services; Transportation and Mobility; Emergency Alerts and Public Safety; Permits and Regulatory Services; Renewals and Expiration Notices; Secure Government Messages; Privacy, Security and Consent; and Public Records and Data Access.</p>
+
+  <dialog class="seal-dialog" id="citizen-portal-dialog" aria-label="Citizen Portal full-size viewer" aria-describedby="citizen-portal-description">
     <button class="seal-dialog-close" id="citizen-portal-dialog-close" type="button" aria-label="Close full-size Citizen Portal graphic">&times;</button>
     <img src="assets/images/citizen-portal.png?v=20260924-1" width="1254" height="1254" alt="Full-size Redrafting America Citizen Portal showing sixteen civic-service categories" />
     <a class="seal-dialog-original" href="assets/images/citizen-portal.png?v=20260924-1" target="_blank" rel="noopener">Open original 1254-by-1254 image</a>
@@ -776,6 +791,7 @@
         dialog.addEventListener('click', function (event) {
           if (event.target === dialog) dialog.close();
         });
+        dialog.addEventListener('close', function () { imageButton.focus(); });
       });
     })();
   </script>
