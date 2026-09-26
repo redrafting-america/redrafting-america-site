@@ -21,6 +21,8 @@ assert.match(home, /target="_blank" rel="noopener" data-full-navigation aria-lab
 assert.match(transcriptHtml, /<meta charset="utf-8"/i);
 assert.match(transcriptHtml, /font-size:\s*1rem/);
 assert.match(transcriptHtml, /font:\s*1rem\/1\.65/);
+assert.match(transcriptHtml, /body\s*\{[^}]*width:\s*100%/s);
+assert.doesNotMatch(transcriptHtml, /body\s*\{[^}]*max-width:/s);
 assert.match(transcriptHtml, /white-space:\s*pre-wrap/);
 assert.match(transcriptHtml, /overflow-wrap:\s*anywhere/);
 assert.match(transcriptHtml, /We don't need better leaders\. We need a better system\./);
@@ -31,4 +33,4 @@ for (const [relative, content] of [[transcriptHtmlPath, transcriptHtml], [transc
 }
 assert(/^[\x00-\x7F]*$/.test(transcriptText), 'Plain-text fallback must remain encoding-independent ASCII');
 
-console.log('PASS: one readable diagram transcript, 12-point-equivalent source sizing, and no HTML-equivalent option.');
+console.log('PASS: one full-width readable diagram transcript, 12-point-equivalent source sizing, and no HTML-equivalent option.');
