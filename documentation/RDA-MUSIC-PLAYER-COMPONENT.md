@@ -48,6 +48,7 @@ Run the structural and queue checks before every production build:
 ```text
 node tooling/test-music-player-package.mjs
 node tooling/test-listening-queue.cjs
+node tooling/test-music-player-browser.cjs
 ```
 
 Browser acceptance must cover desktop and mobile layouts, keyboard operation,

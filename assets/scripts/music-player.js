@@ -562,7 +562,7 @@
           if (!script) {
             script = document.createElement("script");
             script.dataset.musicMetadata = "true";
-            script.src = new URL("assets/vendor/music-metadata/music-metadata-11.15.0.min.js", root).href;
+            script.src = new URL("assets/vendor/music-metadata/music-metadata-11.16.1.min.js", root).href;
             document.head.append(script);
           }
           script.addEventListener("load", () => resolve(window.McGuckinMusicMetadata), {once:true});

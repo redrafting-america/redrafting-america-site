@@ -13,10 +13,11 @@ const required = [
   'assets/styles/music-player.css',
   'assets/vendor/webamp/webamp-2.3.1.lazy.min.js',
   'assets/vendor/webamp/LICENSE.txt',
-  'assets/vendor/music-metadata/music-metadata-11.15.0.min.js',
+  'assets/vendor/music-metadata/music-metadata-11.16.1.min.js',
   'assets/vendor/music-metadata/LICENSE.txt',
   'assets/audio/abracadabra.mp3',
   'assets/audio/vote.mp3',
+  'tooling/test-music-player-browser.cjs',
   'documentation/RDA-MUSIC-PLAYER-COMPONENT.md'
 ];
 

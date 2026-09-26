@@ -1,4 +1,4 @@
-# music-metadata 11.15.0
+# music-metadata 11.16.1
 
 Locally bundled MP3 tag reader for Webamp, from https://github.com/Borewit/music-metadata. MIT licensed. Rebuild with tooling/music-metadata/build.mjs after installing its locked dependencies. The browser adapter supports direct-file XMLHttpRequest reads and HTTP byte-buffer reads (independent of browser stream-reader support).
 
