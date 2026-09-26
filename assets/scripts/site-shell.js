@@ -325,7 +325,7 @@
 
     var desktopLogo = element('a', 'shell-desktop-logo');
     desktopLogo.href = 'index.html';
-    desktopLogo.setAttribute('aria-label', 'Redrafting America home');
+    desktopLogo.setAttribute('aria-label', 'ReDrafting America home');
     desktopLogo.appendChild(originalImage.cloneNode(true));
 
     var trigger = element('button', 'site-nav-trigger');
@@ -341,7 +341,7 @@
 
     var wordmark = element('a', 'brand-wordmark');
     wordmark.href = 'index.html';
-    wordmark.setAttribute('aria-label', 'Redrafting America home');
+    wordmark.setAttribute('aria-label', 'ReDrafting America home');
     ['REDRAFTING', 'AMERICA'].forEach(function (line) {
       wordmark.appendChild(element('span', '', line));
     });
@@ -615,7 +615,7 @@
     drawer.inert = true;
     drawer.setAttribute('aria-label', 'Site navigation and utilities');
     var drawerHeader = element('div', 'site-drawer-header');
-    drawerHeader.appendChild(element('strong', '', 'Redrafting America'));
+    drawerHeader.appendChild(element('strong', '', 'ReDrafting America'));
     var closeButton = element('button', 'site-drawer-close', '×');
     closeButton.type = 'button';
     closeButton.setAttribute('aria-label', 'Close site navigation');

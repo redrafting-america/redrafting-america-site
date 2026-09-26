@@ -252,8 +252,8 @@ def page_html(body: str, headings) -> str:
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Temporary Preview — Article XXIII | Redrafting America</title>
-  <meta name="description" content="Temporary layout preview for Article XXIII of the pending Bylaws of Redrafting America." />
+  <title>Temporary Preview — Article XXIII | ReDrafting America</title>
+  <meta name="description" content="Temporary layout preview for Article XXIII of the pending Bylaws of ReDrafting America." />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png" />
@@ -268,7 +268,7 @@ def page_html(body: str, headings) -> str:
 </head>
 <body>
   <a class="skip-link" href="pages/about/bylaws-preview-article-xxiii.html#main-content">Skip to main content</a>
-  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><img src="assets/images/redrafting-america-logo-web.png" alt="" /><span>Redrafting America</span></a><nav class="main-nav" aria-label="Main navigation"><a href="pages/about/mission.html">Mission</a><a href="index.html#constitution">Constitution v2.0</a><a href="pages/community/drafting-room/index.html">The Drafting Room</a><a href="pages/newsroom/cultural-influences.html">Cultural Influences</a><a href="pages/get-involved/careers.html">Careers</a><a href="pages/get-involved/contact.html">Contact</a></nav><span class="version-pill">v0.7 BETA</span></div></header>
+  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><img src="assets/images/redrafting-america-logo-web.png" alt="" /><span>ReDrafting America</span></a><nav class="main-nav" aria-label="Main navigation"><a href="pages/about/mission.html">Mission</a><a href="index.html#constitution">Constitution v2.0</a><a href="pages/community/drafting-room/index.html">The Drafting Room</a><a href="pages/newsroom/cultural-influences.html">Cultural Influences</a><a href="pages/get-involved/careers.html">Careers</a><a href="pages/get-involved/contact.html">Contact</a></nav><span class="version-pill">v0.7 BETA</span></div></header>
   <main class="main-wrap" id="main-content">
     <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><a href="pages/about/index.html">About Us</a><a href="pages/about/bylaws.html">Bylaws</a><span aria-current="page">Temporary Article XXIII Preview</span></nav>
     <section class="hero-panel bylaws-article-hero" style="--article-color: #800080; --article-ink: #fffdf8;">

@@ -190,8 +190,8 @@ def page_html(meta, body: str, previous_meta, next_meta) -> str:
   <base href="../../" />
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Article {roman}: {html.escape(title)} — Pending Bylaws | Redrafting America</title>
-  <meta name="description" content="Article {roman}, {html.escape(title)}, of the pending Bylaws of Redrafting America." />
+  <title>Article {roman}: {html.escape(title)} — Pending Bylaws | ReDrafting America</title>
+  <meta name="description" content="Article {roman}, {html.escape(title)}, of the pending Bylaws of ReDrafting America." />
   <link rel="canonical" href="https://www.redraftingamerica.org/pages/about/{slug}" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png" />
@@ -208,7 +208,7 @@ def page_html(meta, body: str, previous_meta, next_meta) -> str:
 </head>
 <body>
   <a class="skip-link" href="pages/about/{slug}#main-content">Skip to main content</a>
-  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><img src="assets/images/redrafting-america-logo-web.png" alt="" /><span>Redrafting America</span></a><nav class="main-nav" aria-label="Main navigation"><a href="pages/about/mission.html">Mission</a><a href="index.html#constitution">Constitution v2.0</a><a href="pages/community/drafting-room/index.html">The Drafting Room</a><a href="pages/newsroom/cultural-influences.html">Cultural Influences</a><a href="pages/get-involved/careers.html">Careers</a><a href="pages/get-involved/contact.html">Contact</a></nav><span class="version-pill">v0.7 BETA</span></div></header>
+  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><img src="assets/images/redrafting-america-logo-web.png" alt="" /><span>ReDrafting America</span></a><nav class="main-nav" aria-label="Main navigation"><a href="pages/about/mission.html">Mission</a><a href="index.html#constitution">Constitution v2.0</a><a href="pages/community/drafting-room/index.html">The Drafting Room</a><a href="pages/newsroom/cultural-influences.html">Cultural Influences</a><a href="pages/get-involved/careers.html">Careers</a><a href="pages/get-involved/contact.html">Contact</a></nav><span class="version-pill">v0.7 BETA</span></div></header>
 
   <main class="main-wrap" id="main-content">
     <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><a href="pages/about/index.html">About Us</a><a href="pages/about/bylaws.html">Bylaws</a><span aria-current="page">Article {roman}</span></nav>
