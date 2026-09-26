@@ -27,15 +27,22 @@ async function waitForPlayer(page) {
       if (viewport.width < 760) {
         await page.locator('#site-nav-trigger').click();
         await page.waitForFunction(() => document.querySelector('#site-drawer').getAttribute('aria-hidden') === 'false');
+        await page.waitForFunction(() => document.querySelector('#site-drawer').getBoundingClientRect().left >= -1);
       }
 
       const controls = await page.locator('[data-rda-music-player] [data-transport]').evaluateAll(buttons => buttons
         .filter(button => getComputedStyle(button).display !== 'none')
-        .map(button => ({ label: button.getAttribute('aria-label'), width: button.getBoundingClientRect().width, height: button.getBoundingClientRect().height })));
+        .map(button => {
+          const box = button.getBoundingClientRect();
+          return { label: button.getAttribute('aria-label'), width: box.width, height: box.height, left: box.left, right: box.right };
+        }));
       assert.deepEqual([controls[0].label, controls[2].label, controls[3].label], ['Previous track', 'Stop', 'Next track']);
       assert.match(controls[1].label, /^(?:Play|Pause)$/);
-      assert(controls.every(control => control.width === 44 && control.height === 44));
+      assert(controls.every(control => Math.abs(control.width - 44) < .01 && Math.abs(control.height - 44) < .01), JSON.stringify(controls));
+      assert(controls.every(control => control.left >= 0 && control.right <= viewport.width), JSON.stringify(controls));
       assert.equal(await page.locator('[data-music-info]:visible,[data-toggle-order]:visible,[data-toggle-visualizations]:visible').count(), 0);
+      await page.screenshot({ path: `tmp/music-player-${engine.name()}-${viewport.width}.png`, fullPage: false });
+      await page.locator('[data-rda-music-player]').screenshot({ path: `tmp/music-controls-${engine.name()}-${viewport.width}.png` });
 
       await page.evaluate(() => {
         RDA_WEBAMP.setVolume(0);

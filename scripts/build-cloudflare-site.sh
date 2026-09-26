@@ -25,6 +25,7 @@ done
 
 node "${PROJECT_ROOT}/tooling/test-music-player-package.mjs"
 node "${PROJECT_ROOT}/tooling/test-listening-queue.cjs"
+node "${PROJECT_ROOT}/tooling/test-diagram-transcript.mjs"
 
 rm -rf -- "$OUTPUT_DIRECTORY"
 mkdir -p -- "$OUTPUT_DIRECTORY"

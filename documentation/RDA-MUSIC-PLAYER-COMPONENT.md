@@ -11,6 +11,11 @@ Play/Pause, Stop, and Next. Music Info, playback-order, track presentation, and
 visualization behavior remain inside the component so a later release can enable
 them deliberately without rebuilding the playback engine.
 
+The component behavior is synchronized with the verified `mcguckin.name`
+package. RDA-specific names, its approved two-track catalog, the `assets/audio/`
+location, and the four-button display configuration are integration boundaries;
+they do not replace or disable packaged player behavior.
+
 ## Package boundary
 
 - `assets/scripts/music-player.js` owns initialization, Webamp integration,

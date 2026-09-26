@@ -370,7 +370,7 @@
       } else if (!clockTimer) clockTimer = setTimeout(runClock, media && !media.paused && !media.ended ? 250 : 1000);
     };
     const clearSpectrum = () => context?.clearRect(0, 0, canvas.width, canvas.height);
-    const mayAnimate = () => panel.dataset.exposeVisualizations === "true" && mobileQuery.matches && !document.hidden && !reducedMotion.matches && !motionPaused && window.RDA_LISTENING?.getState().visualizations !== false && playing();
+    const mayAnimate = () => mobileQuery.matches && !document.hidden && !reducedMotion.matches && !motionPaused && window.RDA_LISTENING?.getState().visualizations !== false && playing();
     const paint = timestamp => {
       frame = 0;
       if (!mayAnimate() || !context || !analyser) { clearSpectrum(); return; }

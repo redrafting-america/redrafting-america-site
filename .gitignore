@@ -3,4 +3,5 @@ Thumbs.db
 *.tmp
 .wrangler/
 dist/
+tmp/*.png
 .DS_Store

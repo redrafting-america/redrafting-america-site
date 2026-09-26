@@ -48,6 +48,8 @@ for (const contract of ['window.RDA_MUSIC_PLAYER', 'window.RDA_LISTENING', 'getS
 }
 assert.match(player, /assets\/audio\//);
 assert.match(player, /Object\.freeze\(\["previous", "play", "stop", "next"\]\)/);
+assert.match(player, /const mayAnimate = \(\) => mobileQuery\.matches && !document\.hidden && !reducedMotion\.matches && !motionPaused/);
+assert(!player.includes('dataset.exposeVisualizations'), 'RDA must not disable packaged visualization behavior');
 assert.match(styles, /grid-template-columns:repeat\(4,44px\)/);
 assert.match(styles, /gap:3px/);
 assert.match(styles, /\[data-music-info\][\s\S]*display:none!important/);
