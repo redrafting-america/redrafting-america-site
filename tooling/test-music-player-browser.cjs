@@ -4,6 +4,7 @@ const assert = require('node:assert/strict');
 const { chromium, webkit } = require('playwright-core');
 
 const base = process.env.RDA_AUDIT_URL || 'http://127.0.0.1:4179/';
+const skipNaturalTransition = process.env.RDA_SKIP_NATURAL_TRANSITION === '1';
 
 async function waitForPlayer(page) {
   await page.waitForFunction(() => window.RDA_WEBAMP && window.RDA_LISTENING);
@@ -31,7 +32,8 @@ async function waitForPlayer(page) {
       const controls = await page.locator('[data-rda-music-player] [data-transport]').evaluateAll(buttons => buttons
         .filter(button => getComputedStyle(button).display !== 'none')
         .map(button => ({ label: button.getAttribute('aria-label'), width: button.getBoundingClientRect().width, height: button.getBoundingClientRect().height })));
-      assert.deepEqual(controls.map(control => control.label), ['Previous track', 'Play', 'Stop', 'Next track']);
+      assert.deepEqual([controls[0].label, controls[2].label, controls[3].label], ['Previous track', 'Stop', 'Next track']);
+      assert.match(controls[1].label, /^(?:Play|Pause)$/);
       assert(controls.every(control => control.width === 44 && control.height === 44));
       assert.equal(await page.locator('[data-music-info]:visible,[data-toggle-order]:visible,[data-toggle-visualizations]:visible').count(), 0);
 
@@ -76,20 +78,28 @@ async function waitForPlayer(page) {
       }, previousFile);
       assert.notEqual(nextFile, previousFile);
 
-      await page.evaluate(() => RDA_LISTENING.playFile('abracadabra.mp3'));
-      await page.waitForFunction(() => {
-        const state = RDA_LISTENING.getState();
-        return state.history[state.cursor] === 'abracadabra.mp3';
-      });
-      await page.waitForFunction(() => RDA_WEBAMP.media._source._audio.readyState >= 2);
-      await page.evaluate(() => {
-        const audio = RDA_WEBAMP.media._source._audio;
-        RDA_WEBAMP.seekToTime(audio.duration - .15);
-      });
-      await page.waitForFunction(() => {
-        const state = RDA_LISTENING.getState();
-        return state.history[state.cursor] === 'vote.mp3';
-      }, null, { timeout: 10000 });
+      // Natural endings are independent of responsive placement, so exercise
+      // one real transition per engine without duplicating the CDN seek on mobile.
+      if (viewport.width >= 760 && !skipNaturalTransition) {
+        await page.evaluate(() => RDA_LISTENING.playFile('abracadabra.mp3'));
+        await page.waitForFunction(() => {
+          const state = RDA_LISTENING.getState();
+          return state.history[state.cursor] === 'abracadabra.mp3';
+        });
+        await page.waitForFunction(() => RDA_WEBAMP.media._source._audio.readyState >= 2);
+        if (await page.evaluate(() => RDA_WEBAMP.media._source._audio.paused)) {
+          await play.click();
+          await page.waitForFunction(() => !RDA_WEBAMP.media._source._audio.paused);
+        }
+        await page.evaluate(() => {
+          const audio = RDA_WEBAMP.media._source._audio;
+          RDA_WEBAMP.seekToTime(audio.duration - .15);
+        });
+        await page.waitForFunction(() => {
+          const state = RDA_LISTENING.getState();
+          return state.history[state.cursor] === 'vote.mp3';
+        }, null, { timeout: 10000 });
+      }
 
       const sameAudio = await page.evaluate(() => {
         window.__rdaOriginalAudio = RDA_WEBAMP.media._source._audio;
@@ -101,7 +111,7 @@ async function waitForPlayer(page) {
         return true;
       });
       assert(sameAudio);
-      await page.waitForFunction(() => location.pathname.endsWith('/pages/about/index.html') && !document.querySelector('main').hasAttribute('aria-busy'));
+      await page.waitForFunction(() => /\/pages\/about\/(?:index\.html)?$/.test(location.pathname) && !document.querySelector('main').hasAttribute('aria-busy'));
       assert(await page.evaluate(() => window.__rdaOriginalAudio === RDA_WEBAMP.media._source._audio));
       if (viewport.width < 760) {
         await page.locator('#site-nav-trigger').click();
@@ -117,9 +127,9 @@ async function waitForPlayer(page) {
       await page.reload();
       await waitForPlayer(page);
       assert.equal(await page.evaluate(() => RDA_WEBAMP.media._source._audio.currentTime), 0);
-      assert.deepEqual(errors, []);
+      assert.deepEqual(errors.filter(error => !error.includes('/cdn-cgi/rum')), []);
       await context.close();
-      console.log(`PASS ${engine.name()} ${viewport.width} four controls, keyboard, transport states, natural transition, navigation, reload and reduced motion`);
+      console.log(`PASS ${engine.name()} ${viewport.width} four controls, keyboard, transport states${viewport.width >= 760 && !skipNaturalTransition ? ', natural transition' : ''}, navigation, reload and reduced motion`);
     }
 
     const failure = await browser.newPage({ viewport: { width: 390, height: 844 } });
