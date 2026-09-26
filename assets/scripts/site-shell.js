@@ -438,7 +438,7 @@
     while (inner.firstChild) inner.removeChild(inner.firstChild);
 
     var copy = element('span', 'footer-copy');
-    copy.innerHTML = '&copy; 2026 Redrafting America.';
+    copy.innerHTML = '&copy; 2026 Redrafting America';
     var motto = element('span', 'footer-motto', 'Veritas Super Omnia');
     var updated = element('span', 'footer-updated');
     updated.id = 'last-updated';
@@ -546,13 +546,14 @@
         Number.parseFloat(innerStyle.paddingRight);
       var gap = Number.parseFloat(innerStyle.columnGap) || 0;
       var requiredFixedWidth = copy && motto
-        ? copy.scrollWidth + motto.scrollWidth + (gap * 2)
+        ? (copy.scrollWidth * 2) + motto.scrollWidth + (gap * 2)
         : Number.POSITIVE_INFINITY;
       var selectedFormat = null;
 
       preferredFormats().some(function (format) {
         updated.textContent = format;
-        var requiredWidth = requiredFixedWidth + updated.scrollWidth;
+        var clockExpansion = Math.max(0, updated.scrollWidth - (copy ? copy.scrollWidth : 0));
+        var requiredWidth = requiredFixedWidth + (clockExpansion * 2);
         if (requiredWidth <= availableWidth + 1) {
           selectedFormat = format;
           return true;
