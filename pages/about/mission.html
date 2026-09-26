@@ -430,7 +430,7 @@
   </div>
 
   <div class="doc-hero">
-    <button class="seal-open" id="seal-open" type="button" aria-haspopup="dialog" aria-controls="seal-dialog" aria-label="Enlarge the National Seal">
+    <button class="seal-open" id="seal-open" type="button" aria-haspopup="dialog" aria-controls="seal-dialog" aria-label="Enlarge the National Seal" aria-describedby="seal-description">
       <img class="crest" src="assets/images/seal.png?v=20260924-1" width="2000" height="2000" alt="Veritas Super Omnia national seal for the United Republic of America" />
     </button>
     <span class="seal-enlarge-label" aria-hidden="true">Select to view full size</span>
@@ -446,7 +446,9 @@
     </a>
   </div>
 
-  <dialog class="seal-dialog" id="seal-dialog" aria-label="National Seal full-size viewer">
+  <p class="diagram-description" id="seal-description">The National Seal of the United Republic of America is a circular navy-and-gold emblem. The outer ring reads “Veritas Super Omnia” and “United Republic of America.” At the center, a quartered shield contains a red constitutional scroll, a gold eagle, green scales of justice, and a brown book with a green checkmark, overlaid by a magnifying glass. Binary digits and red laurel branches surround the shield, and a circuit-board pattern fills the background.</p>
+
+  <dialog class="seal-dialog" id="seal-dialog" aria-label="National Seal full-size viewer" aria-describedby="seal-description">
     <button class="seal-dialog-close" id="seal-dialog-close" type="button" aria-label="Close full-size National Seal">&times;</button>
     <img src="assets/images/seal-4k.png?v=20260924-1" width="4000" height="4000" alt="4K Veritas Super Omnia national seal for the United Republic of America" />
     <a class="seal-dialog-original" href="assets/images/seal-4k.png?v=20260924-1" target="_blank" rel="noopener">Open 4000-by-4000 image</a>
@@ -722,6 +724,9 @@
       });
       dialog.addEventListener('click', function (event) {
         if (event.target === dialog) dialog.close();
+      });
+      dialog.addEventListener('close', function () {
+        openButton.focus();
       });
     })();
   </script>
