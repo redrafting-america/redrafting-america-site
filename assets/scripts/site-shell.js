@@ -94,8 +94,9 @@
     return element('span', 'site-coming-soon', 'Coming Soon');
   }
 
-  function getPageContext(main) {
-    var path = window.location.pathname.toLowerCase();
+  function getPageContext(main, pageUrl) {
+    var resolvedUrl = new URL(pageUrl || window.location.href, window.location.href);
+    var path = resolvedUrl.pathname.toLowerCase();
     var isBylawsIndex = /\/(?:pages\/about\/)?bylaws(?:\.html)?\/?$/.test(path);
     var isBylawsPreamble = /\/pages\/about\/bylaws-preamble(?:\.html)?\/?$/.test(path);
     var isBylawsEpilogue = /\/pages\/about\/bylaws-epilogue(?:\.html)?\/?$/.test(path);
@@ -144,8 +145,8 @@
 
     if (isBylawsIndex) {
       page = 'Bylaws';
-      var articleId = window.location.hash.slice(1);
-      var article = articleId ? document.getElementById(articleId) : null;
+      var articleId = resolvedUrl.hash.slice(1);
+      var article = articleId ? main.querySelector('#' + CSS.escape(articleId)) : null;
       if (article && article.classList.contains('bylaws-entry')) {
         section = 'Bylaws';
         sectionHref = 'pages/about/bylaws.html';
@@ -270,99 +271,31 @@
   function buildAudioCard(slotClass) {
     var card = element('section', 'site-audio-card');
     card.appendChild(element('h2', '', 'Site Audio'));
-    card.appendChild(element('p', '', 'Optional background music. Your choice is remembered for this browser session.'));
+    card.appendChild(element('p', '', 'Optional background music with playback continuity across the site.'));
     card.appendChild(element('div', 'site-audio-slot ' + slotClass));
     return card;
   }
 
   function buildMusicControl() {
-    var music = element('div', 'footer-music site-music-control');
-    var audio = element('audio');
-    audio.id = 'bg-audio';
-    audio.preload = 'none';
-
-    var button = element('button', 'music-toggle');
-    button.type = 'button';
-    button.id = 'music-toggle';
-    button.setAttribute('aria-label', 'Play background music');
-    button.setAttribute('aria-pressed', 'false');
-    button.innerHTML =
-      '<svg class="icon-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/><line x1="2" y1="2" x2="22" y2="22"/></svg>' +
-      '<svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>';
-    button.appendChild(element('span', 'music-toggle-label', 'Play music'));
-
-    music.appendChild(audio);
-    music.appendChild(button);
+    var music = element('div', 'footer-music site-music-control footer-player');
+    music.setAttribute('role', 'region');
+    music.setAttribute('tabindex', '-1');
+    music.setAttribute('data-rda-music-player', '');
+    music.setAttribute('aria-label', 'ReDrafting America music player');
+    music.appendChild(element('span', 'footer-player-status', 'Music player loading…'));
     return music;
   }
 
-  function initializeAudio(music) {
-    if (!music) return;
-    var audio = music.querySelector('audio');
-    var button = music.querySelector('.music-toggle');
-    var label = music.querySelector('.music-toggle-label');
-    if (!audio || !button) return;
-
-    var trackKey = 'utopia-bg-track';
-    var playingKey = 'utopia-bg-playing';
-    var tracks = ['abracadabra.mp3', 'vote.mp3'];
-
-    function readSession(key) {
-      try { return window.sessionStorage.getItem(key); }
-      catch (error) { return null; }
-    }
-
-    function writeSession(key, value) {
-      try { window.sessionStorage.setItem(key, value); }
-      catch (error) { /* Audio remains usable when browser storage is disabled. */ }
-    }
-
-    var storedTrack = readSession(trackKey);
-    var chosen = storedTrack ? storedTrack.split('/').pop() : '';
-    if (tracks.indexOf(chosen) === -1) {
-      chosen = tracks[Math.floor(Math.random() * tracks.length)];
-    }
-    writeSession(trackKey, 'assets/audio/' + chosen);
-
-    audio.src = new URL('assets/audio/' + chosen, document.baseURI).href;
-    audio.loop = true;
-    audio.volume = 0.35;
-
-    function setPlayingUI(isPlaying) {
-      button.classList.toggle('playing', isPlaying);
-      button.setAttribute('aria-pressed', isPlaying ? 'true' : 'false');
-      button.setAttribute('aria-label', isPlaying ? 'Pause background music' : 'Play background music');
-      if (label) label.textContent = isPlaying ? 'Pause music' : 'Play music';
-    }
-
-    function tryPlay() {
-      var playPromise = audio.play();
-      if (playPromise && playPromise.then) {
-        playPromise.catch(function () { setPlayingUI(false); });
-      }
-    }
-
-    audio.addEventListener('play', function () {
-      setPlayingUI(true);
-      writeSession(playingKey, '1');
-    });
-    audio.addEventListener('pause', function () { setPlayingUI(false); });
-    audio.addEventListener('error', function () {
-      setPlayingUI(false);
-      button.setAttribute('aria-label', 'Background music could not be loaded');
-    });
-
-    button.addEventListener('click', function () {
-      if (audio.paused) {
-        tryPlay();
-      } else {
-        writeSession(playingKey, '0');
-        audio.pause();
-      }
-    });
-
-    setPlayingUI(false);
-    if (readSession(playingKey) === '1') tryPlay();
+  function loadMusicPlayerComponent(music) {
+    if (!music || window.RDA_MUSIC_PLAYER || document.querySelector('script[data-rda-music-player-component]')) return;
+    var component = document.createElement('script');
+    component.dataset.rdaMusicPlayerComponent = 'true';
+    component.src = new URL('assets/scripts/music-player.js', document.baseURI).href;
+    component.onerror = function () {
+      music.classList.add('has-error');
+      music.textContent = 'Music player unavailable';
+    };
+    document.head.appendChild(component);
   }
 
   function buildPanel(side, currentKey) {
@@ -523,6 +456,7 @@
 
   function initializePublicationTime(updated, inner) {
     var formats = publicationTimeFormats(publicationDate());
+    var minimumTaglineClearance = 80;
     var phone = isMobilePhone();
     var landscape = window.matchMedia('(orientation: landscape)');
     var copy = inner.querySelector('.footer-copy');
@@ -530,11 +464,26 @@
     var scheduled = false;
 
     function preferredFormats() {
-      if (!phone) return [formats.desktopTablet, formats.mobileLandscape, formats.mobilePortrait];
+      if (!phone) return [
+        { name: 'full', text: formats.desktopTablet },
+        { name: 'compact', text: formats.mobileLandscape },
+        { name: 'minimal', text: formats.mobilePortrait }
+      ];
       var isLandscape = landscape.matches || window.innerWidth > window.innerHeight;
       return isLandscape
-        ? [formats.mobileLandscape, formats.mobilePortrait]
-        : [formats.mobilePortrait];
+        ? [
+            { name: 'compact', text: formats.mobileLandscape },
+            { name: 'minimal', text: formats.mobilePortrait }
+          ]
+        : [{ name: 'minimal', text: formats.mobilePortrait }];
+    }
+
+    function textBounds(elementNode) {
+      var range = document.createRange();
+      range.selectNodeContents(elementNode);
+      var bounds = range.getBoundingClientRect();
+      range.detach();
+      return bounds;
     }
 
     function selectFormat() {
@@ -551,11 +500,22 @@
       var selectedFormat = null;
 
       preferredFormats().some(function (format) {
-        updated.textContent = format;
+        updated.textContent = format.text;
+        updated.dataset.publicationFormat = format.name;
         var clockExpansion = Math.max(0, updated.scrollWidth - (copy ? copy.scrollWidth : 0));
         var requiredWidth = requiredFixedWidth + (clockExpansion * 2);
-        if (requiredWidth <= availableWidth + 1) {
-          selectedFormat = format;
+        var updatedTextBounds = textBounds(updated);
+        var mottoBounds = motto ? motto.getBoundingClientRect() : null;
+        var taglineClearance = mottoBounds
+          ? updatedTextBounds.left - mottoBounds.right
+          : Number.NEGATIVE_INFINITY;
+        var textFitsColumn = updated.scrollWidth <= updated.clientWidth + 1;
+        if (
+          requiredWidth <= availableWidth + 1 &&
+          textFitsColumn &&
+          taglineClearance >= minimumTaglineClearance
+        ) {
+          selectedFormat = format.text;
           return true;
         }
         return false;
@@ -564,6 +524,7 @@
       if (!selectedFormat) {
         selectedFormat = formats.mobilePortrait;
         updated.textContent = selectedFormat;
+        updated.dataset.publicationFormat = 'stacked';
         inner.classList.add('is-stacked');
       }
 
@@ -626,12 +587,11 @@
     var context = getPageContext(main);
     var trigger = normalizeBrand(header);
     var music = normalizeFooter(footer);
-    initializeAudio(music);
     var headerInner = header.querySelector(':scope > .header-inner') || header;
     var breadcrumb = buildBreadcrumb(context);
     headerInner.appendChild(breadcrumb);
     window.addEventListener('hashchange', function () {
-      var nextBreadcrumb = buildBreadcrumb(getPageContext(main));
+      var nextBreadcrumb = buildBreadcrumb(getPageContext(main, window.location.href));
       breadcrumb.replaceWith(nextBreadcrumb);
       breadcrumb = nextBreadcrumb;
     });
@@ -683,6 +643,7 @@
       target.appendChild(music);
     }
     placeAudio();
+    loadMusicPlayerComponent(music);
     if (media.addEventListener) media.addEventListener('change', placeAudio);
     else media.addListener(placeAudio);
 
@@ -730,7 +691,29 @@
       window.addEventListener('resize', measureShell);
     }
 
+    function updateForPage(nextMain, pageUrl) {
+      if (nextMain) main = nextMain;
+      var nextContext = getPageContext(main, pageUrl);
+      var nextBreadcrumb = buildBreadcrumb(nextContext);
+      breadcrumb.replaceWith(nextBreadcrumb);
+      breadcrumb = nextBreadcrumb;
+      document.querySelectorAll('.site-navigation').forEach(function (currentNavigation) {
+        currentNavigation.replaceWith(buildNavigation(nextContext.key));
+      });
+      measureShell();
+    }
+
+    window.RDA_SITE_SHELL = Object.freeze({
+      updateForPage: updateForPage,
+      closeDrawer: function () { if (trigger) closeDrawer(trigger, drawer, false); }
+    });
+
     document.body.classList.add('site-shell-ready');
+
+    var navigationScript = document.createElement('script');
+    navigationScript.dataset.rdaNavigation = 'true';
+    navigationScript.src = new URL('assets/scripts/navigation.js', document.baseURI).href;
+    document.head.appendChild(navigationScript);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initialize);

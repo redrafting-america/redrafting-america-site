@@ -1,0 +1,1132 @@
+/*
+ * Repository-contained music player, song information and listening settings.
+ * The shared stylesheet owns the page frame; this file owns everything rendered
+ * inside the footer mount plus the same song/settings patterns reused elsewhere.
+ */
+
+/* Host and pinned Webamp containment. The accessible companion replaces the
+ * native window visually while using the same Webamp audio and state engine. */
+.footer-player {
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:300px;
+  height:116px;
+  transform:translate(-50%,-50%);
+  display:grid;
+  place-items:center;
+  overflow:visible;
+  color:#7896a7;
+  font:600 8px/1.2 var(--font-geist-mono),monospace;
+  letter-spacing:.1em;
+  text-align:center;
+  text-transform:uppercase
+}
+.footer-player-status {
+  opacity:.8
+}
+.footer-player.has-error {
+  border:1px solid var(--line);
+  background:rgba(4,16,26,.7)
+}
+.footer-player>div {
+  position:relative!important;
+  inset:auto!important;
+  margin:auto!important;
+  transform:translate(calc(-150px + var(--webamp-adjust-x,0px)),calc(-60.5px + var(--webamp-adjust-y,0px)))
+}
+@media(max-width:1100px) {
+  .footer-player {
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:300px;
+    height:116px;
+    transform:translate(-50%,-50%)
+  }
+}
+/* Two equal 44px rows are the normal presentation. Short landscape hides the
+ * title row later, while the measured frame contract chooses seven or five controls. */
+@media all {
+  .footer-player {
+    position:relative;
+    grid-column:2;
+    grid-row:1;
+    left:auto;
+    top:auto;
+    width:100%;
+    height:90px;
+    transform:none;
+    min-width:0;
+    letter-spacing:0;
+    text-transform:none
+  }
+  .footer-player>.native-webamp {
+    display:none!important
+  }
+  .mobile-player {
+    position:relative;
+    display:grid;
+    grid-template-rows:44px 44px;
+    gap:2px;
+    width:100%;
+    height:90px;
+    min-width:0;
+    padding:0;
+    background:#111821;
+    border:0;
+    text-align:left;
+    isolation:isolate
+  }
+  .mobile-track {
+    display:flex;
+    align-items:center;
+    gap:6px;
+    min-width:0;
+    width:100%;
+    height:44px;
+    margin:0;
+    padding:0 7px;
+    border:2px solid #535c68;
+    border-radius:2px;
+    background:linear-gradient(#0a1418,#111d22);
+    box-shadow:none;
+    color:var(--blue);
+    cursor:pointer
+  }
+  .mobile-track-viewport {
+    flex:1;
+    min-width:0;
+    overflow:hidden
+  }
+  .mobile-track-text {
+    display:block;
+    width:max-content;
+    font:500 13px/1.35 var(--font-geist-mono),monospace;
+    letter-spacing:0;
+    white-space:nowrap
+  }
+  .mobile-track-viewport.has-overflow .mobile-track-text {
+    animation:mobile-track-scroll var(--title-duration,14s) linear infinite alternate
+  }
+  .mobile-track:hover .mobile-track-text,.mobile-track:focus-visible .mobile-track-text {
+    animation-play-state:paused
+  }
+  .mobile-track-time {
+    flex:none;
+    color:var(--blue);
+    font:500 10px/1 var(--font-geist-mono),monospace;
+    font-variant-numeric:tabular-nums
+  }
+  .mobile-transport {
+    position:relative;
+    display:grid;
+    grid-template-columns:repeat(5,minmax(44px,1fr));
+    gap:3px;
+    height:44px;
+    min-width:0;
+    background:#101d25;
+    isolation:isolate
+  }
+  .mobile-spectrum {
+    position:absolute;
+    inset:0;
+    z-index:0;
+    width:100%;
+    height:100%;
+    opacity:.55;
+    pointer-events:none
+  }
+  .mobile-transport button {
+    position:relative;
+    z-index:1;
+    display:grid;
+    place-items:center;
+    height:44px;
+    min-width:44px;
+    margin:0;
+    padding:0;
+    border:2px solid #87909b;
+    border-right-color:#262c36;
+    border-bottom-color:#262c36;
+    border-radius:3px;
+    background:linear-gradient(#7b878f,#39444f);
+    box-shadow:inset 1px 1px 0 #b0b7bd,inset -1px -1px 0 #303844;
+    color:#eef5f7;
+    cursor:pointer;
+    touch-action:manipulation
+  }
+  .mobile-transport button svg {
+    width:23px;
+    height:23px;
+    fill:currentColor;
+    stroke:currentColor;
+    stroke-width:2;
+    stroke-linejoin:round;
+    filter:drop-shadow(0 1px 1px #0a1118)
+  }
+  .mobile-transport .mobile-play-toggle {
+    color:var(--blue)
+  }
+  .mobile-transport button:active {
+    border-color:#303844 #a0aab4 #a0aab4 #303844;
+    background:#28363e
+  }
+  .mobile-player button:focus-visible {
+    outline:2px solid #a2e5ff;
+    outline-offset:2px;
+    z-index:3
+  }
+  .mobile-track-details {
+    position:absolute;
+    left:50%;
+    bottom:100%;
+    transform:translateX(-50%);
+    width:min(320px,calc(100vw - 24px));
+    margin:0 0 10px;
+    padding:14px;
+    border:1px solid #577786;
+    border-radius:4px;
+    background:#091923;
+    color:#e3f4fc;
+    font:500 14px/1.5 var(--font-geist-mono),monospace;
+    box-shadow:0 8px 28px #0009;
+    overflow-wrap:anywhere
+  }
+  .mobile-track-details[hidden] {
+    display:none
+  }
+  .mobile-player-status {
+    position:absolute;
+    width:1px;
+    height:1px;
+    padding:0;
+    margin:-1px;
+    overflow:hidden;
+    clip-path:inset(50%);
+    white-space:nowrap;
+    border:0
+  }
+}
+
+/* Optional title and spectrum motion stop for reduced motion, site animation
+ * pauses, hidden documents, disabled visuals, and inactive playback. */
+@keyframes mobile-track-scroll {
+  0%,18% {
+    transform:translateX(0)
+  }
+  82%,100% {
+    transform:translateX(var(--title-travel,0px))
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  .mobile-track-viewport.has-overflow .mobile-track-text {
+    animation:none
+  }
+  .mobile-spectrum {
+    display:none
+  }
+}
+.track-details-text {
+  margin:0 0 12px
+}
+.player-motion-toggle {
+  padding:10px 12px;
+  min-height:44px;
+  border:1px solid #a2e5ff;
+  background:#061521;
+  color:#edf8ff;
+  font:500 16px/1.5 Geist,Arial,sans-serif;
+  cursor:pointer
+}
+.mobile-player.motion-paused .mobile-track-text {
+  animation-play-state:paused!important
+}
+.mobile-player.motion-paused .mobile-spectrum {
+  display:none
+}
+.mobile-track-details {
+  max-height:calc(100dvh - var(--site-footer-height) - 20px);
+  overflow:auto
+}
+.mobile-track {
+  height:auto;
+  min-height:44px
+}
+.mobile-player {
+  height:auto;
+  min-height:90px;
+  grid-template-rows:minmax(44px,auto) 44px
+}
+.footer-player {
+  height:auto;
+  min-height:90px
+}
+.mobile-track-text,.mobile-track-time {
+  font-size:12pt
+}
+.full-footer>.footer-spectrum {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:0;
+  opacity:.5;
+  pointer-events:none
+}
+.full-footer>.footer-spectrum[hidden] {
+  display:none
+}
+.full-footer>.footer-player {
+  z-index:1
+}
+.full-footer .mobile-player,.full-footer .mobile-transport {
+  background:transparent
+}
+.mobile-track-details {
+  font-size:10pt;
+  line-height:1.45
+}
+.footer-player-status {
+  font-size:10pt;
+  line-height:1.3
+}
+@media(max-width:760px), (orientation:landscape) and (max-height:500px) {
+  .mobile-track-text,.mobile-track-time,.mobile-track-details,.player-motion-toggle {
+    font-size:10pt
+  }
+}
+@media(max-width:370px) and (orientation:portrait) {
+  .full-footer .footer-player {
+    grid-column:1/-1;
+    grid-row:2;
+    justify-self:center;
+    width:min(275px,100%)
+  }
+}
+@media(orientation:landscape) and (max-height:500px) {
+  .full-footer .footer-player {
+    grid-column:2;
+    grid-row:1;
+    width:232px;
+    height:44px;
+    min-height:44px
+  }
+  .mobile-player {
+    height:44px;
+    min-height:44px;
+    grid-template-rows:44px;
+    gap:0
+  }
+  .mobile-track {
+    display:none!important
+  }
+  .mobile-transport {
+    height:44px
+  }
+}
+html body :is(.button,.button-ghost,.cat-controls button,.site-search-trigger,.mobile-nav-trigger,.site-search-close,.mobile-nav-close,.player-motion-toggle,.menu-motion-toggle,.cat-more-filters>summary,.blog-topic-disclosure>summary) {
+  transition:background-color .12s,color .12s,border-color .12s
+}
+@media(hover:hover) {
+  html body :is(.button,.button-ghost,.cat-controls button,.site-search-trigger,.mobile-nav-trigger,.player-motion-toggle,.menu-motion-toggle,.cat-more-filters>summary,.blog-topic-disclosure>summary):hover {
+    background-color:#123344;
+    border-color:#19c8ff;
+    color:#edf8ff
+  }
+}
+html body :is(.button,.button-ghost,.cat-controls button,.site-search-trigger,.mobile-nav-trigger,.player-motion-toggle,.menu-motion-toggle,.cat-more-filters>summary,.blog-topic-disclosure>summary):active {
+  background:#19c8ff;
+  border-color:#19c8ff;
+  color:#02070d
+}
+html body :is(.button,.button-ghost,.cat-controls button,.site-search-trigger,.mobile-nav-trigger,.player-motion-toggle,.menu-motion-toggle,summary):focus-visible {
+  outline:2px solid #a2e5ff;
+  outline-offset:3px
+}
+.mobile-track-details {
+  width:100%
+}
+/* Shared Music Info hierarchy. The player writes --track-art-size from the
+ * rendered metadata height; Search reuses the structure at its native width. */
+.track-introduction {
+  display:grid;
+  grid-template-columns:var(--track-art-size,68px) minmax(0,1fr);
+  gap:12px;
+  align-items:start;
+  margin-bottom:0
+}
+.track-artwork {
+  width:var(--track-art-size,68px);
+  height:var(--track-art-size,68px);
+  aspect-ratio:1;
+  display:grid;
+  place-items:center;
+  background:#132a36;
+  border:1px solid #577786;
+  color:#91b9c9;
+  font-size:32px
+}
+.track-artwork img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  grid-area:1/1
+}
+.track-artwork span {
+  grid-area:1/1
+}
+.track-artwork [hidden] {
+  display:none
+}
+.track-details-text {
+  min-width:0;
+  min-height:68px;
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:2px;
+  font-family:var(--font-geist-sans),sans-serif;
+  line-height:1.3
+}
+.track-details-text>* {
+  display:block;
+  min-width:0;
+  margin:0;
+  white-space:normal;
+  overflow:visible;
+  overflow-wrap:anywhere
+}
+.track-album-artist {
+  font-weight:700
+}
+.track-song-title {
+  font-style:italic;
+  font-weight:400;
+  margin:3px 0
+}
+.track-album-title {
+  font-weight:400;
+  color:#b7cdd7
+}
+.full-footer>.footer-player:has(.mobile-track-details:not([hidden])) {
+  z-index:4
+}
+.track-personal-comment {
+  grid-column:1/-1;
+  white-space:normal;
+  overflow:visible;
+  overflow-wrap:anywhere;
+  max-width:100%;
+  font-style:italic;
+  margin:0;
+  padding:0;
+  line-height:1.3;
+  color:#d0e3ec
+}
+/* Settings controls are projected from component state after every persistent
+ * page navigation. Native inputs remain the keyboard and assistive-tech controls. */
+.listening-privacy-controls {
+  border:1px solid #577786;
+  padding:12px;
+  margin:16px 0;
+  font:400 14px/1.5 var(--font-geist-sans),sans-serif;
+  min-width:0
+}
+.listening-privacy-controls legend {
+  font-weight:700;
+  padding:0 6px
+}
+.listening-privacy-controls label {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-height:44px;
+  cursor:pointer;
+  font-weight:600
+}
+.listening-privacy-controls input {
+  width:22px;
+  height:22px;
+  flex-shrink:0;
+  accent-color:#19c8ff
+}
+.listening-privacy-controls p {
+  font:inherit;
+  margin:8px 0
+}
+.listening-privacy-controls button,.player-privacy-link {
+  display:inline-flex;
+  align-items:center;
+  min-height:44px;
+  padding:8px 12px;
+  border:1px solid #a2e5ff;
+  background:#061521;
+  color:#edf8ff;
+  font:inherit;
+  cursor:pointer;
+  text-align:left
+}
+.player-privacy-link {
+  text-decoration:underline
+}
+.listening-privacy-controls :focus-visible,.track-personal-comment:focus-visible,.player-privacy-link:focus-visible {
+  outline:3px solid #19c8ff;
+  outline-offset:3px
+}
+[data-listening-privacy-status]:empty {
+  display:none
+}
+.popup-privacy summary {
+  cursor:pointer;
+  min-height:44px;
+  padding:10px 0;
+  font:600 14px/1.5 var(--font-geist-sans),sans-serif
+}
+.popup-privacy summary:focus-visible {
+  outline:3px solid #19c8ff;
+  outline-offset:3px
+}
+/* Music Info uses the seven-control player's dimensions in every layout. Width
+ * contracts only when the viewport cannot preserve 12px outer margins. */
+.mobile-track-details {
+  box-sizing:border-box;
+  width:min(490px,calc(100vw - 24px));
+  height:146px;
+  min-width:0;
+  max-width:none;
+  max-height:min(146px,calc(100dvh - var(--site-footer-height) - var(--site-header-height) - 24px));
+  overflow:auto
+}
+.track-album-title {
+  white-space:normal;
+  overflow:visible;
+  overflow-wrap:anywhere;
+  max-width:100%;
+  padding-bottom:0
+}
+.track-album-title:focus-visible {
+  outline:3px solid #19c8ff;
+  outline-offset:2px
+}
+.track-personal-comment {
+  margin-bottom:0
+}
+.listening-privacy-controls .setting-switch {
+  position:relative;
+  gap:14px
+}
+.setting-switch input[role="switch"] {
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  margin:0;
+  opacity:0;
+  cursor:pointer;
+  z-index:1
+}
+.switch-track {
+  position:relative;
+  display:block;
+  width:88px;
+  height:44px;
+  flex:0 0 88px;
+  border-radius:24px;
+  background:#982d35;
+  border:2px solid #f19ba2;
+  transition:background-color .2s,border-color .2s;
+  color:#fff;
+  font:700 14px/40px var(--font-geist-sans),sans-serif
+}
+.switch-thumb {
+  position:absolute;
+  top:4px;
+  left:4px;
+  width:32px;
+  height:32px;
+  background:#fff;
+  border-radius:50%;
+  box-shadow:0 1px 4px #0006;
+  transition:transform .2s
+}
+.switch-state-off {
+  position:absolute;
+  right:12px
+}
+.switch-state-on {
+  position:absolute;
+  left:12px;
+  display:none
+}
+.setting-switch input:checked+.switch-track {
+  background:#17643b;
+  border-color:#8dd4a5
+}
+.setting-switch input:checked+.switch-track .switch-thumb {
+  transform:translateX(44px)
+}
+.setting-switch input:checked+.switch-track .switch-state-off {
+  display:none
+}
+.setting-switch input:checked+.switch-track .switch-state-on {
+  display:block
+}
+.setting-switch input:focus-visible+.switch-track {
+  outline:3px solid #19c8ff;
+  outline-offset:4px
+}
+.site-motion-paused .switch-track,.site-motion-paused .switch-thumb {
+  transition:none
+}
+@media(prefers-reduced-motion:reduce) {
+  .switch-track,.switch-thumb {
+    transition:none
+  }
+}
+@media(forced-colors:active) {
+  .switch-track {
+    border-color:ButtonText;
+    background:Canvas;
+    color:CanvasText
+  }
+  .switch-thumb {
+    background:ButtonText
+  }
+  .setting-switch input:checked+.switch-track {
+    background:Canvas;
+    border-color:Highlight
+  }
+}
+.track-details-text {
+  min-height:68px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  line-height:1.2
+}
+.track-details-text>* {
+  flex-shrink:0
+}
+.track-song-title {
+  margin:0;
+  white-space:normal;
+  overflow:visible;
+  overflow-wrap:anywhere;
+  max-width:100%
+}
+.track-album-title {
+  padding-bottom:0
+}
+.track-song-title:focus-visible {
+  outline:3px solid #19c8ff;
+  outline-offset:2px
+}
+/* Shuffle and Visuals join the five standard controls on desktop and tablet.
+ * Both phone orientations retain the dedicated Music Info control. */
+.mobile-transport .extra-playback-control {
+  display:none;
+  font:600 12px/1.15 var(--font-geist-mono),monospace;
+  padding:0 6px
+}
+.playback-preferences {
+  margin-bottom:24px
+}
+.playback-preferences select {
+  min-height:44px;
+  margin:8px;
+  padding:8px;
+  background:#091923;
+  color:#eaf5fb;
+  border:1px solid #87bbcc;
+  font:inherit
+}
+.playback-preferences select:focus-visible {
+  outline:3px solid #a2e5ff;
+  outline-offset:3px
+}
+@media(min-width:760px) {
+  .full-footer .footer-player {
+    width:490px
+  }
+  .mobile-transport {
+    grid-template-columns:repeat(5,minmax(44px,1fr)) repeat(2,96px)
+  }
+  .mobile-transport .extra-playback-control {
+    display:grid
+  }
+  .mobile-transport [data-toggle-visualizations][aria-pressed="true"] {
+    color:var(--blue)
+  }
+}
+.playback-preferences .setting-switch {
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  min-height:44px
+}
+@media(min-width:760px) and (max-width:899px) and (orientation:landscape) and (max-height:500px) {
+  .full-footer .footer-player {
+    width:232px
+  }
+  .mobile-transport {
+    grid-template-columns:repeat(5,minmax(44px,1fr))
+  }
+  .mobile-transport .extra-playback-control {
+    display:none
+  }
+}
+.playback-preferences {
+  border:1px solid #577788;
+  padding:12px;
+  min-width:0
+}
+.playback-preferences select {
+  appearance:none;
+  -webkit-appearance:none;
+  min-height:44px;
+  min-width:140px;
+  border-radius:0;
+  background-image:linear-gradient(45deg,transparent 50%,#a2e5ff 50%),linear-gradient(135deg,#a2e5ff 50%,transparent 50%);
+  background-position:calc(100% - 16px) 19px,calc(100% - 11px) 19px;
+  background-size:5px 5px;
+  background-repeat:no-repeat;
+  padding-right:30px
+}
+/* Press feedback lasts long enough to be perceived after touch or keyboard input.
+ * Current transport state uses the filled cyan treatment independently. */
+.mobile-player button {
+  transition:background-color .12s,box-shadow .12s,transform .12s
+}
+@media(hover:hover) {
+  .mobile-player button:hover {
+    filter:brightness(1.18)
+  }
+}
+.mobile-transport .is-playing,.mobile-transport [data-mode="shuffle"],.mobile-transport [data-toggle-visualizations][aria-pressed="true"] {
+  border-top-color:var(--blue);
+  box-shadow:inset 0 3px var(--blue),inset 1px 1px #b0b7bd;
+  color:var(--blue)
+}
+.mobile-transport [data-mode="sequential"] {
+  border-top-color:#a2e5ff;
+  box-shadow:inset 0 3px #a2e5ff;
+  color:#eaf5fb
+}
+.mobile-transport [data-toggle-visualizations][aria-pressed="false"] {
+  border-top-color:#f19ba2;
+  box-shadow:inset 0 3px #f19ba2;
+  color:#fff
+}
+.mobile-player button:active,.mobile-player button.press-feedback {
+  transform:translateY(1px);
+  border-color:#a2e5ff;
+  background:#244959;
+  box-shadow:inset 0 0 0 2px #19c8ff;
+  color:#fff;
+  filter:none
+}
+.mobile-track[aria-expanded="true"] {
+  border-color:#a2e5ff
+}
+.site-motion-paused .mobile-player button {
+  transition:none;
+  transform:none
+}
+@media(prefers-reduced-motion:reduce) {
+  .mobile-player button {
+    transition:none!important;
+    transform:none!important
+  }
+}
+.settings-content div[data-listening-controls-host]+h2 {
+  margin-top:2rem
+}
+.settings-content [data-listening-controls-host] {
+  margin-block:1.5rem
+}
+.search-music-details .track-artwork img {
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  margin:0
+}
+.mobile-transport [data-toggle-visualizations] {
+  align-content:center;
+  justify-items:center;
+  gap:0;
+  color:#fff
+}
+.mobile-transport [data-toggle-visualizations] span {
+  display:block;
+  white-space:nowrap;
+  line-height:1.15
+}
+.mobile-transport [data-toggle-visualizations][aria-pressed="true"] {
+  background:#17643b;
+  border-color:#8dd4a5;
+  box-shadow:inset 0 2px #8dd4a5;
+  color:#fff
+}
+.mobile-transport [data-toggle-visualizations][aria-pressed="false"] {
+  background:#982d35;
+  border-color:#f19ba2;
+  box-shadow:inset 0 2px #f19ba2;
+  color:#fff
+}
+@media(forced-colors:active) {
+  .mobile-transport [data-toggle-visualizations][aria-pressed] {
+    background:ButtonFace;
+    color:ButtonText;
+    border-color:ButtonText;
+    box-shadow:none
+  }
+}
+.mobile-transport button {
+  color:var(--blue)
+}
+.mobile-transport [data-mode="sequential"] {
+  border-top-color:var(--blue);
+  box-shadow:inset 0 3px var(--blue);
+  color:var(--blue)
+}
+
+
+/* Doto is locally hosted and licensed in Doto-OFL.txt so the track display does
+ * not depend on a font service or network request. */
+@font-face {
+  font-family:Doto;
+  src:url("../fonts/doto.ttf") format("truetype");
+  font-display:swap;
+  font-style:normal;
+  font-weight:100 900
+}
+.mobile-track-text,.mobile-track-time {
+  font-family:Doto,var(--font-geist-mono),monospace;
+  font-weight:800;
+  font-variation-settings:"ROND" 100;
+  line-height:1.2
+}
+.mobile-track-text {
+  font-size:18px
+}
+.mobile-track-time {
+  font-size:16px
+}
+.mobile-transport button[data-transport] {
+  color:#eef5f7;
+  border-top-color:#87909b;
+  box-shadow:inset 1px 1px 0 #b0b7bd,inset -1px -1px 0 #303844
+}
+.mobile-transport button[data-transport].is-current {
+  color:var(--blue);
+  border-top-color:var(--blue);
+  box-shadow:inset 0 3px var(--blue),inset 1px 1px #b0b7bd
+}
+.mobile-transport button[data-transport]:active,.mobile-transport button[data-transport].press-feedback {
+  color:var(--blue);
+  border-color:var(--blue);
+  box-shadow:inset 0 0 0 2px var(--blue)
+}
+.mobile-track {
+  gap:0;
+  padding:0
+}
+.mobile-track-time {
+  border-left:2px solid #535c68;
+  padding:8px;
+  display:flex;
+  align-items:center;
+  align-self:stretch;
+  margin:0
+}
+.mobile-track-viewport {
+  padding-inline:7px
+}
+.mobile-transport [data-toggle-order][data-mode="shuffle"] {
+  background:#805600;
+  color:#fff;
+  border-color:#ffd166;
+  box-shadow:inset 0 2px #ffd166
+}
+.mobile-transport [data-toggle-order][data-mode="sequential"] {
+  background:#653399;
+  color:#fff;
+  border-color:#d6b0ff;
+  box-shadow:inset 0 2px #d6b0ff
+}
+@media(forced-colors:active) {
+  .mobile-transport [data-toggle-order][data-mode] {
+    background:ButtonFace;
+    color:ButtonText;
+    border-color:ButtonText;
+    box-shadow:none
+  }
+}
+.mobile-transport [data-music-info] {
+  color:#eef5f7
+}
+.mobile-transport [data-music-info][aria-expanded="true"] {
+  color:var(--blue)
+}
+.mobile-track {
+  cursor:default
+}
+@media(max-width:759px) and (orientation:portrait) {
+  .full-footer .footer-player {
+    grid-column:1/-1;
+    grid-row:2;
+    width:min(100%,300px);
+    justify-self:center
+  }
+}
+.mobile-transport .music-info-symbol {
+  display:block;
+  font:bold italic 30px/1 Georgia,"Times New Roman",serif;
+  text-align:center;
+  pointer-events:none
+}
+.mobile-transport button svg {
+  pointer-events:none
+}
+.mobile-transport button[data-transport],.mobile-transport [data-music-info] {
+  color:#fff
+}
+.mobile-transport button[data-transport].is-current,.mobile-transport [data-music-info][aria-expanded="true"],.mobile-transport button[data-transport]:active,.mobile-transport button[data-transport].press-feedback {
+  background:#007c98;
+  color:#fff;
+  border-color:var(--blue);
+  box-shadow:inset 0 1px #63e1ff
+}
+@media(forced-colors:active) {
+  .mobile-transport button[data-transport].is-current,.mobile-transport [data-music-info][aria-expanded="true"] {
+    background:Highlight;
+    color:HighlightText;
+    border-color:Highlight;
+    box-shadow:none
+  }
+}
+/* JavaScript measures available width and writes these data attributes. CSS owns
+ * only the resulting geometry, keeping button and display heights authoritative. */
+.full-footer[data-player-controls] {
+  grid-template-columns:minmax(0,1fr) var(--player-width) minmax(0,1fr);
+  grid-template-rows:auto;
+  gap:0 12px
+}
+.full-footer[data-player-controls] .footer-player {
+  grid-column:2;
+  grid-row:1;
+  width:var(--player-width);
+  justify-self:center
+}
+.full-footer[data-player-controls] .footer-left {
+  grid-column:1;
+  grid-row:1
+}
+.full-footer[data-player-controls] .footer-updated {
+  grid-column:3;
+  grid-row:1
+}
+.full-footer[data-player-controls="7"] .mobile-transport {
+  grid-template-columns:repeat(5,minmax(44px,1fr)) repeat(2,96px)
+}
+.full-footer[data-player-controls="7"] .extra-playback-control {
+  display:grid
+}
+.full-footer[data-player-controls="5"] .mobile-transport {
+  grid-template-columns:repeat(5,minmax(44px,1fr))
+}
+.full-footer[data-player-controls="5"] .extra-playback-control {
+  display:none
+}
+.full-footer[data-player-controls] .mobile-track {
+  height:var(--player-row-height,44px);
+  min-height:var(--player-row-height,44px);
+  max-height:var(--player-row-height,44px)
+}
+.full-footer[data-player-controls] .mobile-player {
+  grid-template-rows:var(--player-row-height,44px) var(--player-row-height,44px);
+  height:calc(2 * var(--player-row-height,44px) + 2px);
+  min-height:0
+}
+.full-footer[data-player-layout="stacked"] {
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:auto auto;
+  gap:8px 12px;
+  padding-block:10px 0
+}
+.full-footer[data-player-layout="stacked"] .footer-player {
+  grid-column:1/-1;
+  grid-row:2
+}
+.full-footer[data-player-layout="stacked"] .footer-updated {
+  grid-column:2
+}
+@media(orientation:landscape) and (max-height:500px) {
+  .full-footer[data-player-controls] .mobile-player {
+    grid-template-rows:var(--player-row-height,44px);
+    height:var(--player-row-height,44px)
+  }
+  .full-footer[data-player-controls] .footer-player {
+    height:var(--player-row-height,44px);
+    min-height:var(--player-row-height,44px)
+  }
+}
+.full-footer[data-player-tight="true"] .footer-left,.full-footer[data-player-tight="true"] .footer-updated {
+  white-space:normal;
+  overflow-wrap:anywhere;
+  min-width:0;
+  max-width:100%;
+  line-height:1.15
+}
+.full-footer[data-player-tight="true"] .copyright-year,.full-footer[data-player-tight="true"] .footer-name-first,.full-footer[data-player-tight="true"] .footer-name-last {
+  display:block;
+  white-space:normal
+}
+.full-footer[data-player-tight="true"] .footer-updated>span {
+  white-space:normal
+}
+@media(orientation:landscape) and (max-height:500px) {
+  /* Three compact timestamp lines must stay within the 44px control row. This
+   * prevents late player measurement from moving the completed TM control. */
+  .full-footer[data-player-tight="true"] .footer-left,
+  .full-footer[data-player-tight="true"] .footer-updated {
+    line-height:1
+  }
+}
+/* Phone portrait keeps the three footer regions side by side. Five equal
+ * controls provide a 232px center column with a dedicated Music Info button. */
+@media(max-width:759px) and (orientation:portrait) {
+  .full-footer[data-player-controls="5"] {
+    grid-template-columns:minmax(0,1fr) 232px minmax(0,1fr);
+    grid-template-rows:auto;
+    gap:0 2px;
+    padding-inline:max(2px,env(safe-area-inset-left,0px),env(safe-area-inset-right,0px))
+  }
+  .full-footer[data-player-controls="5"] .footer-player {
+    grid-column:2;
+    grid-row:1;
+    width:232px
+  }
+  .full-footer[data-player-controls="5"] .footer-left {
+    grid-column:1;
+    grid-row:1
+  }
+  .full-footer[data-player-controls="5"] .footer-updated {
+    grid-column:3;
+    grid-row:1
+  }
+}
+/* Universal Search consumes the component's presentation vocabulary but controls
+ * playback only through window.RDA_LISTENING. */
+.search-music-details .track-introduction {
+  margin:18px 0
+}
+.search-music-details .track-album-artist {
+  white-space:normal;
+  overflow:visible;
+  overflow-wrap:anywhere;
+  max-width:100%
+}
+.search-music-details .track-personal-comment {
+  font-style:italic;
+  white-space:normal;
+  overflow:visible;
+  overflow-wrap:anywhere;
+  margin:0;
+  max-width:100%
+}
+.search-music-result .track-introduction {
+  margin:12px 0
+}
+.search-music-result .track-artwork img {
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  margin:0
+}
+.search-music-result .track-details-text>strong {
+  margin:0;
+  font-size:inherit
+}
+.search-music-result .track-album-artist {
+  white-space:normal;
+  overflow:visible;
+  overflow-wrap:anywhere;
+  max-width:100%
+}
+.search-music-result .track-personal-comment,.search-music-details .track-personal-comment {
+  display:block;
+  font-style:italic;
+  white-space:normal;
+  overflow:visible;
+  overflow-wrap:anywhere;
+  max-width:100%
+}
+.search-music-result .track-personal-comment {
+  margin:0;
+  padding:0
+}
+
+/* ReDrafting America exposes only the four primary transport controls for this
+ * release. Keep their original 44px geometry and 3px separation; later controls
+ * remain in the packaged markup and behavior so they can be enabled deliberately. */
+.site-audio-slot .footer-player {
+  --blue:#19c8ff;
+  --line:#577786;
+  position:relative;
+  inset:auto;
+  display:block;
+  width:100%;
+  height:44px;
+  min-height:44px;
+  transform:none;
+  overflow:visible;
+  letter-spacing:0;
+  text-transform:none
+}
+.site-audio-slot .footer-player>div {
+  transform:none!important
+}
+.site-audio-slot .mobile-player {
+  display:block;
+  width:100%;
+  height:44px;
+  min-height:44px;
+  padding:0;
+  background:transparent
+}
+.site-audio-slot .mobile-transport {
+  display:grid;
+  grid-template-columns:repeat(4,44px);
+  justify-content:center;
+  gap:3px;
+  width:185px;
+  height:44px;
+  margin:0 auto;
+  background:#101d25
+}
+.site-audio-slot .mobile-track,
+.site-audio-slot [data-music-info],
+.site-audio-slot .extra-playback-control,
+.site-audio-slot .mobile-spectrum,
+.site-audio-slot .footer-spectrum,
+.site-audio-slot .mobile-track-details {
+  display:none!important
+}
+.site-audio-slot .mobile-player-status {
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0
+}

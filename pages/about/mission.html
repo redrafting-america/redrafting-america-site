@@ -102,20 +102,6 @@
 
   .header-right { display: flex; align-items: center; gap: 1rem; justify-self: end; }
 
-  .music-toggle {
-    display: flex; align-items: center; justify-content: center;
-    width: 34px; height: 34px; flex-shrink: 0;
-    background: transparent; border: 1px solid var(--panel-line); border-radius: 6px;
-    color: var(--parchment-dim); cursor: pointer; padding: 0;
-    transition: color 0.15s ease, border-color 0.15s ease;
-  }
-  .music-toggle svg { width: 16px; height: 16px; }
-  .music-toggle.playing { color: var(--gold); border-color: var(--gold-dim); }
-  .music-toggle .icon-off { display: block; }
-  .music-toggle .icon-on { display: none; }
-  .music-toggle.playing .icon-off { display: none; }
-  .music-toggle.playing .icon-on { display: block; }
-
   .menu-toggle {
     display: flex; align-items: center; justify-content: center;
     width: 34px; height: 34px; flex-shrink: 0;
@@ -718,13 +704,6 @@
       <span class="footer-copy">&copy; 2026 Redrafting America</span>
       <span class="footer-motto">Veritas Super Omnia</span>
       <span class="footer-updated" id="last-updated">Updated: &mdash;</span>
-      <div class="footer-music">
-        <audio id="bg-audio" preload="none"></audio>
-        <button class="music-toggle" id="music-toggle" aria-label="Play background music" aria-pressed="false">
-                <svg class="icon-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
-                <svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-              </button>
-      </div>
     </div>
   </footer>
 
@@ -755,60 +734,6 @@
       btn.addEventListener('click', function () {
         var isOpen = menu.classList.toggle('open');
         btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      });
-    })();
-  </script>
-
-  <script>
-    (function () {
-      var TRACK_KEY = 'utopia-bg-track';
-      var PLAYING_KEY = 'utopia-bg-playing';
-      var tracks = ['assets/audio/abracadabra.mp3', 'assets/audio/vote.mp3'];
-
-      var chosen = sessionStorage.getItem(TRACK_KEY);
-      if (!chosen) {
-        chosen = tracks[Math.floor(Math.random() * tracks.length)];
-        sessionStorage.setItem(TRACK_KEY, chosen);
-      }
-
-      var audio = document.getElementById('bg-audio');
-      var btn2 = document.getElementById('music-toggle');
-      if (!audio || !btn2) return;
-
-      audio.src = chosen;
-      audio.loop = true;
-      audio.volume = 0.35;
-
-      function setPlayingUI(isPlaying) {
-        btn2.classList.toggle('playing', isPlaying);
-        btn2.setAttribute('aria-pressed', isPlaying ? 'true' : 'false');
-        btn2.setAttribute('aria-label', isPlaying ? 'Pause background music' : 'Play background music');
-      }
-
-      function tryPlay() {
-        var p = audio.play();
-        if (p && p.then) {
-          p.then(function () {
-            setPlayingUI(true);
-            sessionStorage.setItem(PLAYING_KEY, '1');
-          }).catch(function () {
-            setPlayingUI(false);
-          });
-        }
-      }
-
-      if (sessionStorage.getItem(PLAYING_KEY) === '1') {
-        tryPlay();
-      }
-
-      btn2.addEventListener('click', function () {
-        if (audio.paused) {
-          tryPlay();
-        } else {
-          audio.pause();
-          setPlayingUI(false);
-          sessionStorage.setItem(PLAYING_KEY, '0');
-        }
       });
     })();
   </script>

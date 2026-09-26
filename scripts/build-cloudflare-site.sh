@@ -23,6 +23,9 @@ for required_path in "${required_paths[@]}"; do
     fi
 done
 
+node "${PROJECT_ROOT}/tooling/test-music-player-package.mjs"
+node "${PROJECT_ROOT}/tooling/test-listening-queue.cjs"
+
 rm -rf -- "$OUTPUT_DIRECTORY"
 mkdir -p -- "$OUTPUT_DIRECTORY"
 
