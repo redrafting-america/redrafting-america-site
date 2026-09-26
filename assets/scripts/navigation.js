@@ -199,10 +199,14 @@
       if (finalUrl.origin !== window.location.origin) throw new Error('External redirect');
       finalUrl.hash = url.hash;
       var incoming = new DOMParser().parseFromString(await response.text(), 'text/html');
+      var incomingBaseElement = incoming.querySelector('base[href]');
+      var incomingBase = incomingBaseElement
+        ? new URL(incomingBaseElement.getAttribute('href'), finalUrl.href).href
+        : finalUrl.href;
       var sourceMain = incomingMain(incoming);
       if (!sourceMain) throw new Error('Unsupported page');
-      absoluteUrls(sourceMain, finalUrl.href);
-      await synchronizeStyles(incoming, finalUrl.href);
+      absoluteUrls(sourceMain, incomingBase);
+      await synchronizeStyles(incoming, incomingBase);
       if (id !== sequence) return;
 
       document.dispatchEvent(new Event('rda:before-page'));
@@ -218,7 +222,7 @@
       commitAddress(finalUrl, pop);
       displayedPage = pageKey(finalUrl);
       if (window.RDA_SITE_SHELL) window.RDA_SITE_SHELL.updateForPage(nextMain, finalUrl.href);
-      await runPageScripts(incoming, finalUrl.href);
+      await runPageScripts(incoming, incomingBase);
       document.dispatchEvent(new Event('rda:page'));
       announcement.textContent = document.title;
       finish(finalUrl, position, true);
