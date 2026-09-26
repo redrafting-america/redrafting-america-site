@@ -371,7 +371,7 @@
     while (inner.firstChild) inner.removeChild(inner.firstChild);
 
     var copy = element('span', 'footer-copy');
-    copy.innerHTML = '&copy; 2026 Redrafting America';
+    copy.innerHTML = '&copy; 2026 ReDrafting America';
     var motto = element('span', 'footer-motto', 'Veritas Super Omnia');
     var updated = element('span', 'footer-updated');
     updated.id = 'last-updated';

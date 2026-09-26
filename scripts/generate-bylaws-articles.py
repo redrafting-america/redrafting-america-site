@@ -222,7 +222,7 @@ def page_html(meta, body: str, previous_meta, next_meta) -> str:
       <nav class="bylaws-page-nav" aria-label="Bylaws navigation"><a href="{previous_href}">&larr; {html.escape(previous_label)}</a><a href="pages/about/bylaws.html#article-{roman}">Table of Contents</a><a href="{next_href}">{html.escape(next_label)} &rarr;</a></nav>
     </article>
   </main>
-  <footer class="site-footer"><div class="footer-inner"><p>&copy; 2026 Redrafting America.</p><p>Veritas Super Omnia &mdash; The Truth Above All Else.</p></div></footer>
+  <footer class="site-footer"><div class="footer-inner"><p>&copy; 2026 ReDrafting America.</p><p>Veritas Super Omnia &mdash; The Truth Above All Else.</p></div></footer>
   <script src="assets/scripts/site-shell.js?v=20260917-1"></script>
 </body>
 </html>
